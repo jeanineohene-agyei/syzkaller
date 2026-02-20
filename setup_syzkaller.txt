@@ -1,0 +1,184 @@
+============================================================
+Linux 5.0 + syzkaller Setup Guide (CloudLab Version)
+============================================================
+
+Host OS: Ubuntu 22.04 (CloudLab node)
+Target: Linux 5.0 with KCOV + KASAN
+VM: QEMU (TCG mode, no KVM)
+
+---
+
+===============================
+Install Host Dependencies
+===============================
+
+sudo apt update
+sudo apt install docker.io qemu-system-x86 debootstrap git
+sudo usermod -aG docker $USER
+ 
+
+Log out and log back in after adding docker group.
+
+===============================
+Build Linux 5.0 in Docker (Ubuntu 18.04)
+===============================
+
+docker run -it ubuntu:18.04 /bin/bash
+ 
+
+Inside container:
+
+ 
+apt update
+apt install -y build-essential bc flex bison \
+               libssl-dev libelf-dev libncurses-dev git
+
+cd /root
+git clone --branch v5.0 \
+  https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git linux-5.0
+cd linux-5.0
+
+make defconfig
+make kvm_guest.config
+
+scripts/config \
+  --enable KCOV \
+  --enable KCOV_ENABLE_COMPARISONS \
+  --enable KASAN \
+  --enable KASAN_INLINE \
+  --enable DEBUG_INFO_DWARF4 \
+  --enable CONFIGFS_FS \
+  --enable SECURITYFS \
+  --disable RANDOMIZE_BASE
+
+make olddefconfig
+make -j$(nproc)
+
+===============================
+Copy Kernel Files to Host
+===============================
+
+On host:
+docker ps -a
+
+Copy bzImage:
+docker cp <container_id>:/root/linux-5.0/arch/x86/boot/bzImage \
+/proj/ecs-251-PG0/$USER/linux-5.0-bzImage
+
+Copy vmlinux:
+docker cp <container_id>:/root/linux-5.0/vmlinux \
+/proj/ecs-251-PG0/$USER/vmlinux
+
+===============================
+Install Go
+===============================
+ 
+cd /proj/ecs-251-PG0/$USER
+
+wget https://dl.google.com/go/go1.23.6.linux-amd64.tar.gz
+tar -xf go1.23.6.linux-amd64.tar.gz
+
+export GOROOT=/proj/ecs-251-PG0/$USER/go
+export PATH=$GOROOT/bin:$PATH
+
+===============================
+Clone and Build syzkaller
+===============================
+ 
+cd /proj/ecs-251-PG0/$USER
+git clone https://github.com/google/syzkaller.git
+cd syzkaller
+make
+
+# if that doesn't work, can try make TARGETOS=linux TARGETARCH=amd64
+ 
+===============================
+Create Debian VM Image
+===============================
+./tools/create-image.sh bullseye
+
+===============================
+Create syz-manager Config
+===============================
+
+Create:
+nano /proj/ecs-251-PG0/$USER/syzkaller/linux-5.0.cfg
+ 
+
+Paste:
+
+{
+  "target": "linux/amd64",
+  "http": "127.0.0.1:56741",
+  "workdir": "/proj/ecs-251-PG0/$USER/syzkaller/workdir",
+
+  "kernel_obj": "/proj/ecs-251-PG0/$USER",
+  "image": "/proj/ecs-251-PG0/$USER/syzkaller/bullseye.img",
+  "sshkey": "/proj/ecs-251-PG0/$USER/syzkaller/bullseye.id_rsa",
+
+  "syzkaller": "/proj/ecs-251-PG0/$USER/syzkaller",
+
+  "procs": 1,
+  "type": "qemu",
+
+  "vm": {
+    "count": 2,
+    "kernel": "/proj/ecs-251-PG0/$USER/linux-5.0-bzImage",
+    "cpu": 2,
+    "mem": 2048,
+    "cmdline": "root=/dev/sda console=ttyS0 earlyprintk=serial net.ifnames=0 selinux=0 kaslr=off ignore_loglevel loglevel=7 panic_on_oops=0 init=/sbin/init",
+    "qemu_args": "-machine accel=tcg"
+  }
+}
+
+ 
+
+Create workdir:
+mkdir -p /proj/ecs-251-PG0/$USER/syzkaller/workdir
+
+===============================
+Fix Permissions
+===============================
+
+sudo chown -R $USER:ecs-251-PG0 /proj/ecs-251-PG0/$USER/syzkaller
+sudo chown -R $USER:ecs-251-PG0 /proj/ecs-251-PG0/$USER/syzkaller/bullseye
+
+===============================
+Start Fuzzing
+===============================
+cd /proj/ecs-251-PG0/$USER/syzkaller
+./bin/syz-manager -config=linux-5.0.cfg
+ 
+===============================
+View Dashboard from Mac
+===============================
+
+From your Mac:
+ssh -L 56741:127.0.0.1:56741 $USER@<cloudlab-node>
+ 
+Then open:
+http://127.0.0.1:56741
+
+===============================
+If VM Crashes
+===============================
+
+Before restarting:
+rm -rf workdir/vm-* 
+
+Then restart:
+./bin/syz-manager -config=linux-5.0.cfg
+ 
+===============================
+ Notes
+===============================
+
+* Login inside VM console:
+  login: root
+  password: (press Enter)
+* exec total increasing= fuzzing working
+
+
+
+
+
