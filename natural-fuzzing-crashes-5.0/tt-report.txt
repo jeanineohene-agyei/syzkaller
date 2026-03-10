@@ -1,0 +1,68 @@
+Buffer I/O error on dev loop2p2, logical block 15, async page read
+Buffer I/O error on dev loop2p1, logical block 9, async page read
+tmpfs: Bad mount option obj_user
+netlink: 24 bytes leftover after parsing attributes in process `syz.8.4762'.
+rcu: INFO: rcu_sched self-detected stall on CPU
+rcu: 	1-....: (20999 ticks this GP) idle=44e/1/0x4000000000000002 softirq=393856/393856 fqs=5223 
+rcu: 	 (t=21003 jiffies g=928845 q=1452)
+NMI backtrace for cpu 1
+CPU: 1 PID: 25665 Comm: syz.8.4793 Not tainted 5.0.0 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
+Call Trace:
+ <IRQ>
+ __dump_stack linux-5.0/lib/dump_stack.c:77 [inline]
+ dump_stack+0x75/0xae linux-5.0/lib/dump_stack.c:113
+ nmi_cpu_backtrace+0xf2/0x110 linux-5.0/lib/nmi_backtrace.c:101
+ nmi_trigger_cpumask_backtrace+0x132/0x190 linux-5.0/lib/nmi_backtrace.c:62
+ trigger_single_cpu_backtrace linux-5.0/include/linux/nmi.h:164 [inline]
+ rcu_dump_cpu_stacks+0x16c/0x1ba linux-5.0/kernel/rcu/tree.c:1211
+ print_cpu_stall linux-5.0/kernel/rcu/tree.c:1348 [inline]
+ check_cpu_stall linux-5.0/kernel/rcu/tree.c:1422 [inline]
+ rcu_pending linux-5.0/kernel/rcu/tree.c:3018 [inline]
+ rcu_check_callbacks+0xbbe/0x11c0 linux-5.0/kernel/rcu/tree.c:2521
+ update_process_times+0x28/0x60 linux-5.0/kernel/time/timer.c:1635
+ tick_sched_handle+0xe6/0x150 linux-5.0/kernel/time/tick-sched.c:161
+ tick_sched_timer+0x40/0x110 linux-5.0/kernel/time/tick-sched.c:1271
+ __run_hrtimer linux-5.0/kernel/time/hrtimer.c:1389 [inline]
+ __hrtimer_run_queues+0x31a/0x780 linux-5.0/kernel/time/hrtimer.c:1451
+ hrtimer_interrupt+0x2af/0x6f0 linux-5.0/kernel/time/hrtimer.c:1509
+ local_apic_timer_interrupt linux-5.0/arch/x86/kernel/apic/apic.c:1035 [inline]
+ smp_apic_timer_interrupt+0xb9/0x2e0 linux-5.0/arch/x86/kernel/apic/apic.c:1060
+ apic_timer_interrupt+0xf/0x20 linux-5.0/arch/x86/entry/entry_64.S:807
+ </IRQ>
+RIP: 0010:check_memory_region_inline linux-5.0/mm/kasan/generic.c:173 [inline]
+RIP: 0010:check_memory_region+0x0/0x190 linux-5.0/mm/kasan/generic.c:191
+Code: 00 00 e9 13 a9 d7 01 0f 1f 00 48 89 f2 be f5 00 00 00 e9 03 a9 d7 01 0f 1f 00 48 89 f2 be f8 00 00 00 e9 f3 a8 d7 01 0f 1f 00 <48> 85 f6 0f 84 79 01 00 00 48 b8 ff ff ff ff ff 7f ff ff 0f b6 d2
+RSP: 0018:ffff88806c1e77f0 EFLAGS: 00000246 ORIG_RAX: ffffffffffffff13
+RAX: 0000000000080000 RBX: 0000000000000000 RCX: ffffffff90440aa6
+RDX: 0000000000000001 RSI: 0000000000000008 RDI: ffff888068af3310
+RBP: ffff888066b07a80 R08: ffffed100d15e663 R09: ffffed100d15e663
+R10: 0000000000000001 R11: ffffed100d15e662 R12: ffffed100cd60f88
+R13: ffff888068af3300 R14: ffff88806a0a6300 R15: dffffc0000000000
+ paste_selection+0x196/0x330 linux-5.0/drivers/tty/vt/selection.c:352
+ tioclinux+0x1fd/0x430 linux-5.0/drivers/tty/vt/vt.c:3009
+ vt_ioctl+0x1500/0x24a0 linux-5.0/drivers/tty/vt/vt_ioctl.c:364
+ tty_ioctl+0x27d/0x1330 linux-5.0/drivers/tty/tty_io.c:2653
+ vfs_ioctl linux-5.0/fs/ioctl.c:46 [inline]
+ do_vfs_ioctl+0x1a0/0xfb0 linux-5.0/fs/ioctl.c:698
+ ksys_ioctl+0x84/0x90 linux-5.0/fs/ioctl.c:713
+ __do_sys_ioctl linux-5.0/fs/ioctl.c:720 [inline]
+ __se_sys_ioctl linux-5.0/fs/ioctl.c:718 [inline]
+ __x64_sys_ioctl+0x6f/0xb0 linux-5.0/fs/ioctl.c:718
+ do_syscall_64+0x9a/0x2c0 linux-5.0/arch/x86/entry/common.c:290
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x7f4bb06c20bd
+Code: 02 b8 ff ff ff ff c3 66 0f 1f 44 00 00 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 a8 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007f4baf0e6f98 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
+RAX: ffffffffffffffda RBX: 00007f4bb0947090 RCX: 00007f4bb06c20bd
+RDX: 0000200000000000 RSI: 000000000000541c RDI: 0000000000000003
+RBP: 00007f4bb075ed3d R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+R13: 00007f4bb0947128 R14: 00007f4bb0947090 R15: 00007f4baf0c7000
+
+<<<<<<<<<<<<<<< tail report >>>>>>>>>>>>>>>
+
+SYZFAIL: failed to recv rpc
+fd=3 want=4 recv=0 n=0 (errno 9: Bad file descriptor)
+
+<<<<<<<<<<<<<<< tail report >>>>>>>>>>>>>>>

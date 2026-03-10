@@ -1,0 +1,96 @@
+netlink: 'syz.1.4185': attribute type 26 has an invalid length.
+netlink: 'syz.1.4185': attribute type 26 has an invalid length.
+netlink: 'syz.1.4185': attribute type 26 has an invalid length.
+==================================================================
+BUG: KASAN: slab-out-of-bounds in vcs_scr_readw+0x93/0xa0 linux-5.0/drivers/tty/vt/vt.c:4609
+Read of size 2 at addr ffff888063c5c870 by task syz.1.4189/25950
+
+CPU: 1 PID: 25950 Comm: syz.1.4189 Not tainted 5.0.0 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
+Call Trace:
+ __dump_stack linux-5.0/lib/dump_stack.c:77 [inline]
+ dump_stack+0x75/0xae linux-5.0/lib/dump_stack.c:113
+ print_address_description+0x65/0x270 linux-5.0/mm/kasan/report.c:187
+ kasan_report+0x149/0x18d linux-5.0/mm/kasan/report.c:317
+ vcs_scr_readw+0x93/0xa0 linux-5.0/drivers/tty/vt/vt.c:4609
+ vcs_write+0x4fc/0xa30 linux-5.0/drivers/tty/vt/vc_screen.c:526
+ __vfs_write+0xea/0x690 linux-5.0/fs/read_write.c:485
+ vfs_write+0x168/0x4a0 linux-5.0/fs/read_write.c:549
+ ksys_write+0xbb/0x190 linux-5.0/fs/read_write.c:598
+ do_syscall_64+0x9a/0x2c0 linux-5.0/arch/x86/entry/common.c:290
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x7f124a9c80bd
+Code: 02 b8 ff ff ff ff c3 66 0f 1f 44 00 00 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 a8 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007f124940df98 EFLAGS: 00000246 ORIG_RAX: 0000000000000001
+RAX: ffffffffffffffda RBX: 00007f124ac4cfa0 RCX: 00007f124a9c80bd
+RDX: 0000000000000011 RSI: 00002000000000c0 RDI: 0000000000000004
+RBP: 00007f124aa64d3d R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+R13: 00007f124ac4d038 R14: 00007f124ac4cfa0 R15: 00007f12493ee000
+
+Allocated by task 24167:
+ set_track linux-5.0/mm/kasan/common.c:85 [inline]
+ __kasan_kmalloc.constprop.4+0xa0/0xd0 linux-5.0/mm/kasan/common.c:495
+ kmalloc linux-5.0/include/linux/slab.h:550 [inline]
+ kzalloc linux-5.0/include/linux/slab.h:740 [inline]
+ vc_do_resize+0x2b8/0x1250 linux-5.0/drivers/tty/vt/vt.c:1176
+ vt_ioctl+0xb13/0x24a0 linux-5.0/drivers/tty/vt/vt_ioctl.c:840
+ tty_ioctl+0x27d/0x1330 linux-5.0/drivers/tty/tty_io.c:2653
+ vfs_ioctl linux-5.0/fs/ioctl.c:46 [inline]
+ do_vfs_ioctl+0x1a0/0xfb0 linux-5.0/fs/ioctl.c:698
+ ksys_ioctl+0x84/0x90 linux-5.0/fs/ioctl.c:713
+ __do_sys_ioctl linux-5.0/fs/ioctl.c:720 [inline]
+ __se_sys_ioctl linux-5.0/fs/ioctl.c:718 [inline]
+ __x64_sys_ioctl+0x6f/0xb0 linux-5.0/fs/ioctl.c:718
+ do_syscall_64+0x9a/0x2c0 linux-5.0/arch/x86/entry/common.c:290
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+
+Freed by task 22606:
+ set_track linux-5.0/mm/kasan/common.c:85 [inline]
+ __kasan_slab_free+0x130/0x180 linux-5.0/mm/kasan/common.c:457
+ slab_free_hook linux-5.0/mm/slub.c:1430 [inline]
+ slab_free_freelist_hook linux-5.0/mm/slub.c:1457 [inline]
+ slab_free linux-5.0/mm/slub.c:3005 [inline]
+ kfree+0x8b/0x1a0 linux-5.0/mm/slub.c:3957
+ kvfree+0x58/0x80 linux-5.0/mm/util.c:445
+ xt_free_table_info+0xfe/0x170 linux-5.0/net/netfilter/x_tables.c:1198
+ __do_replace+0x66f/0x800 linux-5.0/net/ipv6/netfilter/ip6_tables.c:1107
+ do_replace linux-5.0/net/ipv6/netfilter/ip6_tables.c:1160 [inline]
+ do_ip6t_set_ctl+0x275/0x3c0 linux-5.0/net/ipv6/netfilter/ip6_tables.c:1684
+ nf_sockopt linux-5.0/net/netfilter/nf_sockopt.c:106 [inline]
+ nf_setsockopt+0x65/0xc0 linux-5.0/net/netfilter/nf_sockopt.c:115
+ ipv6_setsockopt+0x104/0x140 linux-5.0/net/ipv6/ipv6_sockglue.c:945
+ tcp_setsockopt+0x80/0xc0 linux-5.0/net/ipv4/tcp.c:3068
+ __sys_setsockopt+0x131/0x210 linux-5.0/net/socket.c:1901
+ __do_sys_setsockopt linux-5.0/net/socket.c:1912 [inline]
+ __se_sys_setsockopt linux-5.0/net/socket.c:1909 [inline]
+ __x64_sys_setsockopt+0xba/0x150 linux-5.0/net/socket.c:1909
+ do_syscall_64+0x9a/0x2c0 linux-5.0/arch/x86/entry/common.c:290
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+
+The buggy address belongs to the object at ffff888063c5c860
+ which belongs to the cache kmalloc-16 of size 16
+The buggy address is located 0 bytes to the right of
+ 16-byte region [ffff888063c5c860, ffff888063c5c870)
+The buggy address belongs to the page:
+page:ffffea00018f1700 count:1 mapcount:0 mapping:ffff88806cc01b40 index:0xffff888063c5cce0
+flags: 0x100000000000200(slab)
+raw: 0100000000000200 ffffea0001af8000 0000000800000008 ffff88806cc01b40
+raw: ffff888063c5cce0 0000000080800012 00000001ffffffff 0000000000000000
+page dumped because: kasan: bad access detected
+
+Memory state around the buggy address:
+ ffff888063c5c700: fb fb fc fc fb fb fc fc fb fb fc fc fb fb fc fc
+ ffff888063c5c780: fb fb fc fc fb fb fc fc fb fb fc fc 00 00 fc fc
+>ffff888063c5c800: 00 00 fc fc fb fb fc fc fb fb fc fc 00 00 fc fc
+                                                             ^
+ ffff888063c5c880: fb fb fc fc fb fb fc fc fb fb fc fc fb fb fc fc
+ ffff888063c5c900: fb fb fc fc fb fb fc fc 00 00 fc fc fb fb fc fc
+==================================================================
+
+<<<<<<<<<<<<<<< tail report >>>>>>>>>>>>>>>
+
+SYZFAIL: failed to recv rpc
+fd=3 want=4 recv=0 n=0 (errno 9: Bad file descriptor)
+
+<<<<<<<<<<<<<<< tail report >>>>>>>>>>>>>>>

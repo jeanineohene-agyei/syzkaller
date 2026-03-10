@@ -1,0 +1,136 @@
+Buffer I/O error on dev loop2p2, logical block 15, async page read
+Buffer I/O error on dev loop2p2, logical block 8, async page read
+Buffer I/O error on dev loop2p3, logical block 8, async page read
+==================================================================
+BUG: KASAN: slab-out-of-bounds in vcs_scr_readw+0x93/0xa0 linux-5.0/drivers/tty/vt/vt.c:4609
+Read of size 2 at addr ffff888062e6abb0 by task syz.2.7218/42658
+
+CPU: 1 PID: 42658 Comm: syz.2.7218 Not tainted 5.0.0 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
+Call Trace:
+ __dump_stack linux-5.0/lib/dump_stack.c:77 [inline]
+ dump_stack+0x75/0xae linux-5.0/lib/dump_stack.c:113
+ print_address_description+0x65/0x270 linux-5.0/mm/kasan/report.c:187
+ kasan_report+0x149/0x18d linux-5.0/mm/kasan/report.c:317
+ vcs_scr_readw+0x93/0xa0 linux-5.0/drivers/tty/vt/vt.c:4609
+ vcs_write+0x4fc/0xa30 linux-5.0/drivers/tty/vt/vc_screen.c:526
+ __vfs_write+0xea/0x690 linux-5.0/fs/read_write.c:485
+ vfs_write+0x168/0x4a0 linux-5.0/fs/read_write.c:549
+ ksys_write+0xbb/0x190 linux-5.0/fs/read_write.c:598
+ do_syscall_64+0x9a/0x2c0 linux-5.0/arch/x86/entry/common.c:290
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+RIP: 0033:0x7fc2887a30bd
+Code: 02 b8 ff ff ff ff c3 66 0f 1f 44 00 00 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 a8 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007fc2871e8f98 EFLAGS: 00000246 ORIG_RAX: 0000000000000001
+RAX: ffffffffffffffda RBX: 00007fc288a27fa0 RCX: 00007fc2887a30bd
+RDX: 0000000000000015 RSI: 0000200000000200 RDI: 0000000000000007
+RBP: 00007fc28883fd3d R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+R13: 00007fc288a28038 R14: 00007fc288a27fa0 R15: 00007fc2871c9000
+
+Allocated by task 34081:
+ set_track linux-5.0/mm/kasan/common.c:85 [inline]
+ __kasan_kmalloc.constprop.4+0xa0/0xd0 linux-5.0/mm/kasan/common.c:495
+ kmalloc linux-5.0/include/linux/slab.h:550 [inline]
+ kzalloc linux-5.0/include/linux/slab.h:740 [inline]
+ vc_do_resize+0x2b8/0x1250 linux-5.0/drivers/tty/vt/vt.c:1176
+ vt_ioctl+0xb13/0x24a0 linux-5.0/drivers/tty/vt/vt_ioctl.c:840
+ tty_ioctl+0x27d/0x1330 linux-5.0/drivers/tty/tty_io.c:2653
+ vfs_ioctl linux-5.0/fs/ioctl.c:46 [inline]
+ do_vfs_ioctl+0x1a0/0xfb0 linux-5.0/fs/ioctl.c:698
+ ksys_ioctl+0x84/0x90 linux-5.0/fs/ioctl.c:713
+ __do_sys_ioctl linux-5.0/fs/ioctl.c:720 [inline]
+ __se_sys_ioctl linux-5.0/fs/ioctl.c:718 [inline]
+ __x64_sys_ioctl+0x6f/0xb0 linux-5.0/fs/ioctl.c:718
+ do_syscall_64+0x9a/0x2c0 linux-5.0/arch/x86/entry/common.c:290
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+
+Freed by task 33394:
+ set_track linux-5.0/mm/kasan/common.c:85 [inline]
+ __kasan_slab_free+0x130/0x180 linux-5.0/mm/kasan/common.c:457
+ slab_free_hook linux-5.0/mm/slub.c:1430 [inline]
+ slab_free_freelist_hook linux-5.0/mm/slub.c:1457 [inline]
+ slab_free linux-5.0/mm/slub.c:3005 [inline]
+ kfree+0x8b/0x1a0 linux-5.0/mm/slub.c:3957
+ do_delayed_call linux-5.0/include/linux/delayed_call.h:28 [inline]
+ put_link linux-5.0/fs/namei.c:883 [inline]
+ step_into linux-5.0/fs/namei.c:1772 [inline]
+ walk_component+0x3f3/0xdd0 linux-5.0/fs/namei.c:1829
+ link_path_walk.part.40+0x46a/0xf30 linux-5.0/fs/namei.c:2138
+ link_path_walk linux-5.0/fs/namei.c:2072 [inline]
+ path_openat+0x235/0x3e50 linux-5.0/fs/namei.c:3533
+ do_filp_open+0x1a5/0x2b0 linux-5.0/fs/namei.c:3564
+ do_sys_open+0x302/0x490 linux-5.0/fs/open.c:1063
+ do_syscall_64+0x9a/0x2c0 linux-5.0/arch/x86/entry/common.c:290
+ entry_SYSCALL_64_after_hwframe+0x44/0xa9
+
+The buggy address belongs to the object at ffff888062e6aba0
+ which belongs to the cache kmalloc-16 of size 16
+The buggy address is located 0 bytes to the right of
+ 16-byte region [ffff888062e6aba0, ffff888062e6abb0)
+The buggy address belongs to the page:
+page:ffffea00018b9a80 count:1 mapcount:0 mapping:ffff88806cc01b40 index:0xffff888062e6a900
+flags: 0x100000000000200(slab)
+raw: 0100000000000200 ffffea0001af9580 0000000400000004 ffff88806cc01b40
+raw: ffff888062e6a900 0000000080800007 00000001ffffffff 0000000000000000
+page dumped because: kasan: bad access detected
+
+Memory state around the buggy address:
+ ffff888062e6aa80: fb fb fc fc fb fb fc fc fb fb fc fc fb fb fc fc
+ ffff888062e6ab00: fb fb fc fc fb fb fc fc fb fb fc fc fb fb fc fc
+>ffff888062e6ab80: fb fb fc fc 00 00 fc fc fb fb fc fc fb fb fc fc
+                                     ^
+ ffff888062e6ac00: fb fb fc fc fb fb fc fc fb fb fc fc fb fb fc fc
+ ffff888062e6ac80: fb fb fc fc fb fb fc fc 00 00 fc fc fb fb fc fc
+==================================================================
+print_req_error: 580 callbacks suppressed
+print_req_error: I/O error, dev loop2, sector 608 flags 80700
+print_req_error: I/O error, dev loop2, sector 608 flags 0
+buffer_io_error: 510 callbacks suppressed
+Buffer I/O error on dev loop2p2, logical block 8, async page read
+print_req_error: I/O error, dev loop2, sector 609 flags 0
+Buffer I/O error on dev loop2p2, logical block 9, async page read
+print_req_error: I/O error, dev loop2, sector 610 flags 0
+Buffer I/O error on dev loop2p2, logical block 10, async page read
+print_req_error: I/O error, dev loop2, sector 611 flags 0
+Buffer I/O error on dev loop2p2, logical block 11, async page read
+print_req_error: I/O error, dev loop2, sector 612 flags 0
+Buffer I/O error on dev loop2p2, logical block 12, async page read
+print_req_error: I/O error, dev loop2, sector 613 flags 0
+Buffer I/O error on dev loop2p2, logical block 13, async page read
+print_req_error: I/O error, dev loop2, sector 614 flags 0
+Buffer I/O error on dev loop2p2, logical block 14, async page read
+print_req_error: I/O error, dev loop2, sector 615 flags 0
+Buffer I/O error on dev loop2p2, logical block 15, async page read
+print_req_error: I/O error, dev loop2, sector 208 flags 80700
+Buffer I/O error on dev loop2p3, logical block 8, async page read
+Buffer I/O error on dev loop2p3, logical block 9, async page read
+print_req_error: 980 callbacks suppressed
+print_req_error: I/O error, dev loop2, sector 608 flags 80700
+print_req_error: I/O error, dev loop2, sector 608 flags 0
+buffer_io_error: 870 callbacks suppressed
+Buffer I/O error on dev loop2p2, logical block 8, async page read
+print_req_error: I/O error, dev loop2, sector 609 flags 0
+Buffer I/O error on dev loop2p2, logical block 9, async page read
+print_req_error: I/O error, dev loop2, sector 610 flags 0
+Buffer I/O error on dev loop2p2, logical block 10, async page read
+print_req_error: I/O error, dev loop2, sector 611 flags 0
+Buffer I/O error on dev loop2p2, logical block 11, async page read
+print_req_error: I/O error, dev loop2, sector 612 flags 0
+Buffer I/O error on dev loop2p2, logical block 12, async page read
+print_req_error: I/O error, dev loop2, sector 208 flags 80700
+print_req_error: I/O error, dev loop2, sector 208 flags 0
+Buffer I/O error on dev loop2p3, logical block 8, async page read
+print_req_error: I/O error, dev loop2, sector 613 flags 0
+Buffer I/O error on dev loop2p2, logical block 13, async page read
+print_req_error: I/O error, dev loop2, sector 614 flags 0
+Buffer I/O error on dev loop2p2, logical block 14, async page read
+Buffer I/O error on dev loop2p2, logical block 15, async page read
+Buffer I/O error on dev loop2p7, logical block 8, async page read
+
+<<<<<<<<<<<<<<< tail report >>>>>>>>>>>>>>>
+
+SYZFAIL: failed to recv rpc
+fd=3 want=4 recv=0 n=0 (errno 9: Bad file descriptor)
+
+<<<<<<<<<<<<<<< tail report >>>>>>>>>>>>>>>
