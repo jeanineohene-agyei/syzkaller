@@ -1,0 +1,67 @@
+Warning: Permanently added '[localhost]:20759' (ED25519) to the list of known hosts.
+2026/03/07 02:17:23 parsed 1 programs
+Setting up swapspace version 1, size = 122.1 MiB (127995904 bytes)
+no label, UUID=fa1fec55-5288-4fcb-a010-30dac97d986b
+syzkaller login: [   32.541460] Adding 124996k swap on ./swap-file.  Priority:0 extents:1 across:124996k 
+[   32.928628] audit: type=1400 audit(1772849844.724:6): avc:  denied  { execmem } for  pid=264 comm="syz-executor" scontext=system_u:system_r:kernel_t:s0 tcontext=system_u:system_r:kernel_t:s0 tclass=process permissive=1
+[   33.981075] audit: type=1401 audit(1772849845.776:7): op=setxattr invalid_context="u:object_r:app_data_file:s0:c512,c768"
+[   38.484078] syz-executor (382) used greatest stack depth: 24616 bytes left
+2026/03/07 02:17:30 executed programs: 0
+[   43.254542] ------------[ cut here ]------------
+[   43.259587] WARNING: CPU: 0 PID: 1300 at mm/vmalloc.c:2980 __vmalloc_node_range+0x6a8/0x820
+[   43.264849] Modules linked in:
+[   43.266815] CPU: 0 PID: 1300 Comm: syz.3.17 Not tainted 5.15.0 #1
+[   43.270294] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
+[   43.273646] RIP: 0010:__vmalloc_node_range+0x6a8/0x820
+[   43.275796] Code: 0d fe ff ff e8 f9 f6 cd ff 8b 3c 24 4c 89 e1 31 f6 48 c7 c2 80 6e 4d 84 45 31 e4 e8 12 0d 01 00 e9 ec fd ff ff e8 d8 f6 cd ff <0f> 0b e9 e0 fd ff ff e8 cc f6 cd ff 8b 3c 24 4c 89 e1 31 f6 48 c7
+[   43.282379] RSP: 0018:ffff88800acffb40 EFLAGS: 00010246
+[   43.284089] RAX: 0000000000000000 RBX: ffffe8ffffffffff RCX: ffff88800a990000
+[   43.286405] RDX: 0000000000000000 RSI: ffff88800a990000 RDI: 0000000000000002
+[   43.288720] RBP: 0000000000000001 R08: ffffffff816d5db8 R09: 0000000000000000
+[   43.291034] R10: 0000000000000007 R11: 0000000000000001 R12: 0000000000000000
+[   43.293361] R13: ffffc90000000000 R14: dffffc0000000000 R15: 00000000ffffffff
+[   43.295680] FS:  0000555555709500(0000) GS:ffff88806d000000(0000) knlGS:0000000000000000
+[   43.298308] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[   43.300194] CR2: 0000001b31863fff CR3: 000000000f8d0000 CR4: 00000000000006f0
+[   43.302494] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+[   43.304801] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+[   43.307122] Call Trace:
+[   43.307942]  ? avc_has_perm+0x2cf/0x480
+[   43.309225]  ? sel_write_load+0x290/0x1a00
+[   43.310585]  ? avc_has_perm_noaudit+0x3b0/0x3b0
+[   43.312076]  ? vmalloc_32+0x30/0x30
+[   43.313256]  ? up_read+0x10/0x90
+[   43.314338]  ? __sanitizer_cov_trace_pc+0x1a/0x40
+[   43.315903]  ? sel_write_load+0x290/0x1a00
+[   43.317264]  __vmalloc_node+0xb5/0x100
+[   43.318519]  ? sel_write_load+0x290/0x1a00
+[   43.319879]  sel_write_load+0x290/0x1a00
+[   43.321188]  ? futex_exit_release+0xf0/0xf0
+[   43.322575]  ? __handle_mm_fault+0xaa2/0x24a0
+[   43.324006]  ? sel_read_bool+0x400/0x400
+[   43.325300]  ? __sanitizer_cov_trace_pc+0x1a/0x40
+[   43.326824]  ? __inode_security_revalidate+0xee/0x130
+[   43.328476]  ? __sanitizer_cov_trace_pc+0x1a/0x40
+[   43.330018]  ? avc_policy_seqno+0x9/0x70
+[   43.331310]  ? __sanitizer_cov_trace_pc+0x1a/0x40
+[   43.332853]  ? selinux_file_permission+0x36/0x540
+[   43.334401]  ? __sanitizer_cov_trace_pc+0x1a/0x40
+[   43.335938]  ? security_file_permission+0x496/0x6c0
+[   43.337546]  ? sel_read_bool+0x400/0x400
+[   43.338845]  vfs_write+0x1fb/0x880
+[   43.339968]  ksys_write+0x121/0x240
+[   43.341143]  ? __ia32_sys_read+0xb0/0xb0
+[   43.342432]  ? write_comp_data+0x1c/0x70
+[   43.343721]  ? __sanitizer_cov_trace_pc+0x1a/0x40
+[   43.345271]  ? exit_to_user_mode_prepare+0x2f/0x150
+[   43.346866]  do_syscall_64+0x3b/0x90
+[   43.348074]  entry_SYSCALL_64_after_hwframe+0x44/0xae
+[   43.349739] RIP: 0033:0x7fc1ace860bd
+[   43.350917] Code: 02 b8 ff ff ff ff c3 66 0f 1f 44 00 00 f3 0f 1e fa 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 a8 ff ff ff f7 d8 64 89 01 48
+[   43.356767] RSP: 002b:00007ffcf1c277b8 EFLAGS: 00000246 ORIG_RAX: 0000000000000001
+[   43.359149] RAX: ffffffffffffffda RBX: 00007fc1ad10afa0 RCX: 00007fc1ace860bd
+[   43.361448] RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000003
+[   43.363738] RBP: 00007fc1acf22d3d R08: 0000000000000000 R09: 0000000000000000
+[   43.366047] R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+[   43.368334] R13: 00007fc1ad10afac R14: 00007fc1ad10afa0 R15: 0000000000000000
+[   43.370588] ---[ end trace 4c70822fedcc4a9e ]---

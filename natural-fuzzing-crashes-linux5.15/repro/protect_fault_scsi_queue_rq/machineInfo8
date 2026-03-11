@@ -1,0 +1,33 @@
+QEMU emulator version 6.2.0 (Debian 1:6.2+dfsg-2ubuntu6.28)
+qemu-system-x86_64 ["-m" "2048" "-smp" "2" "-chardev" "socket,id=SOCKSYZ,server=on,wait=off,host=localhost,port=45143" "-mon" "chardev=SOCKSYZ,mode=control" "-display" "none" "-serial" "stdio" "-no-reboot" "-name" "VM-3" "-device" "virtio-rng-pci" "-machine" "accel=kvm" "-device" "e1000,netdev=net0" "-netdev" "user,id=net0,restrict=on,hostfwd=tcp:127.0.0.1:41941-:22" "-hda" "/proj/ecs-251-PG0/kkringel/syzkaller/bullseye.img" "-snapshot" "-kernel" "/proj/ecs-251-PG0/kkringel/linux-5.15-bzImage" "-append" "root=/dev/sda console=ttyS0 root=/dev/sda console=ttyS0 earlyprintk=serial net.ifnames=0 panic=1"]
+
+[CPU Info]
+processor           : 0, 1
+vendor_id           : GenuineIntel
+cpu family          : 15
+model               : 107
+model name          : QEMU Virtual CPU version 2.5+
+stepping            : 1
+microcode           : 0x1
+cpu MHz             : 2199.998
+cache size          : 16384 KB
+physical id         : 0
+siblings            : 2
+core id             : 0, 1
+cpu cores           : 2
+apicid              : 0, 1
+initial apicid      : 0, 1
+fpu                 : yes
+fpu_exception       : yes
+cpuid level         : 13
+wp                  : yes
+flags               : fpu de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx lm constant_tsc nopl xtopology cpuid tsc_known_freq pni cx16 x2apic hypervisor lahf_lm cpuid_fault pti
+bugs                : cpu_meltdown spectre_v1 spectre_v2 spec_store_bypass l1tf mds swapgs itlb_multihit
+bogomips            : 4399.99
+clflush size        : 64
+cache_alignment     : 128
+address sizes       : 40 bits physical, 48 bits virtual
+power management    : 
+
+--------------------------------------------------------------------------------
+

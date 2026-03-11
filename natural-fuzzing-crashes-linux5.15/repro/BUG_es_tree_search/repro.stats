@@ -1,0 +1,276 @@
+Extracting prog: 48.923034961s
+Minimizing prog: 4m18.401100377s
+Simplifying prog options: 0s
+Extracting C: 36.690974274s
+Simplifying C: 3m17.668303462s
+
+
+extracting reproducer from 66 programs
+first checking the prog from the crash report
+single: executing 1 programs separately with timeout 30s
+testing program (duration=30s, {Threaded:true Repeat:true RepeatTimes:0 Procs:4 Slowdown:1 Sandbox:none SandboxArg:0 Leak:false NetInjection:false NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:false NicVF:false USB:false VhciInjection:false Wifi:false IEEE802154:false Sysctl:true Swap:true UseTmpDir:true HandleSegv:true Trace:false CallComments:true LegacyOptions:{Collide:false Fault:false FaultCall:0 FaultNth:0}}): add_key$keyring-keyctl$restrict_keyring-syz_mount_image$ext4-add_key$fscrypt_provisioning-modify_ldt$read_default-keyctl$KEYCTL_PKEY_ENCRYPT-kexec_load
+detailed listing:
+executing program 0:
+r0 = add_key$keyring(&(0x7f0000000080), &(0x7f0000000040)={'syz', 0x3}, 0x0, 0x0, 0xfffffffffffffffe)
+keyctl$restrict_keyring(0x1d, r0, &(0x7f0000000000)='.dead\x00', &(0x7f00000000c0)='keyring\x00')
+syz_mount_image$ext4(&(0x7f00000004c0)='ext4\x00', &(0x7f0000000580)='./file0\x00', 0x0, &(0x7f00000005c0), 0x1, 0x535, &(0x7f0000000b40)="$eJzs3c9vHFcdAPDv7NrGdV2clh7aShCLHooU2etfVQ03ww1RCZFeioQiK9naIWuvZa+l2if3X0CICxIqEicujsSJW67AhWOQOHDgVKlCJUjAISya2Zl0be82jrrdaTKfjzSZ9/ZNdt7X4+/Om5kdTwCVNZ/+k0TMRsSfImKuVz27wHxvdrp6dzudkuh2r/8jyZb7cPXudrFo8f+ezyvTEfHdehLfTy6u9+Do+M5mq9Xcz+uNzs5e4+DoeOH2zuZWc6u5u7qysra+tv7Wm8sji/Xffz+++vI/N371iz/85vpP7n/y+7Rbs3lbfxyjMh/z+c9kMl7se30iIr436pWVpJ7H80Lfa8lEiR3iiaTb72sR8XqW/3NRDxsPqqKbGdr8SRd4ZtWyMXBSW4yIXrlWW1zsjeFfjplaq33QufZe+3D3Vm+sfCUma+/dbjWX8mOFKzGZpPXlrPxpfeVcfTUiGwP/vP5cVl+82W7dGusnHXDe8+fy/1/1Xv4DFeGQH6pL/kN1yX+oLvkP1SX/obrkP1SX/Ifqkv9QXfIfqkv+Q3XJf6ikH779djp1T/P733fbW7fvbO99e2Vpcefw5uLN9v7e4la7vZXdsbPz+Pdrtdt7y6tx+H6j0zzoNA6Ojm/stA93Ozey+/pvNCfHEBNwOS9evfeXJCJOvvNcNqWm8ja5Cs+2bjeJsu9BBspRL/sDCCiNU39QXY7xgQF/oveM6WENrdH3BRiPWtkdAErzxquu/0FVOf8P1eX8P1TXuTG+0wFQQc7/Q/XY4UN1zQ55/tcLfc/uWoqIr0bE/frkV4pnfQFPv0fP4f5cheQkYhTvo6DwTBemIuJL0I3LFMr+ZAK+aJ8m/fBljsbZIWDsPly9u11MZfdlnD7e6H0JIo37NJ96LRP5udHp7BrpzIPkzHclkhF9d2I+Iu5t/PlKOkW+HUbwtpd28kFEvDJo+yf58957V35mHtQvxP9SX/mV/PzRRPbc+MubP1d/muJ/NZ+n0zf64n/tCdZfdvwAVNO9dPyzNGj/V8v26fFo/3d2/DM7ovtDyt7/FeO/0wvjv9qj8V99yPjv6iXX8b+503eHtaXxn3z9r3PFlK4/nX+uoJ7Axx9EvDYw/iLe6SzW8/HXBmy7YT7a+OXPhrX1x5+Ogccdf/fXEW/E4PgLaanR2dlrHBwdL2R/x3Srubu6srK2vrb+1pvLjewaaaO4UnrRj376u+vD1v9l2P4zQ+J/3O//Ny+5jtkf/+23w9qK45/h27/20VTyTlYq7kt7f7PT2V+OmEp+cPH1lc/uS7FM8R5p/N96fXD+v5TH3/v9n7gQfzefpz+na/m9NGn5Yf7ZmC6/kPZv+93PzP/i+K+IvzgWHIc0/luP2f6D8j997b+XXMd/7v+xOayt7PgBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAynZwdHxns9Vq7n+BhbJjBAabeTAZ7/TVk4jo5vNaRFyLiHpefhgRk3l9ISKm0+VOIpYe9pVLjAUAAAAAAOj5fwAAAP//0cr4Xw==")
+r1 = add_key$fscrypt_provisioning(&(0x7f0000000100), &(0x7f0000000140)={'syz', 0x0}, &(0x7f0000000180)={0x0, 0x0, @a}, 0x48, r0)
+modify_ldt$read_default(0x2, 0x0, 0x0)
+keyctl$KEYCTL_PKEY_ENCRYPT(0x19, &(0x7f0000000200)={r1, 0xcb, 0xe7}, &(0x7f0000000240)={'enc=', 'pkcs1', ' hash=', {'sha512-ce\x00'}}, &(0x7f00000002c0)="fdaaa9e4ebdd28ecba7837bb1d9284ccab019e45b503215c2f465dea5ac67a0da8dcf8d953edc8b52f61579ebc4af907da722e81e5bfc391c10c22f80ad9437657c706d3a55cac9847f0cc3dae5d2fadf32e97a9c94d7ddee97a5c0005f1fe6d29a8f6e434b54eb7fe69d91e545169a0957179584bd9bb1c2bed1228915fe5f049307e7e5f9516bee50e03fd3b4bd0ec3e83fe642d05edda4a7a3eeb92e137ad4f009f0d7338fbc70c5037a0da0163e839accc2cf437c817eb5decc7026aa09ece86b028e5aea03c4e8612", &(0x7f00000003c0)=""/231)
+kexec_load(0x1000400000006, 0x0, 0x0, 0x1)
+
+failed to symbolize report: failed to start scripts/get_maintainer.pl [scripts/get_maintainer.pl --git-min-percent=15 -f fs/ext4/extents_status.c]: fork/exec scripts/get_maintainer.pl: no such file or directory
+program crashed: kernel BUG in __es_tree_search
+single: successfully extracted reproducer
+found reproducer with 7 syscalls
+minimizing guilty program
+testing program (duration=36.960800796s, {Threaded:true Repeat:true RepeatTimes:0 Procs:4 Slowdown:1 Sandbox:none SandboxArg:0 Leak:false NetInjection:false NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:false NicVF:false USB:false VhciInjection:false Wifi:false IEEE802154:false Sysctl:true Swap:true UseTmpDir:true HandleSegv:true Trace:false CallComments:true LegacyOptions:{Collide:false Fault:false FaultCall:0 FaultNth:0}}): add_key$keyring-keyctl$restrict_keyring-syz_mount_image$ext4-add_key$fscrypt_provisioning-modify_ldt$read_default-keyctl$KEYCTL_PKEY_ENCRYPT
+detailed listing:
+executing program 0:
+r0 = add_key$keyring(&(0x7f0000000080), &(0x7f0000000040)={'syz', 0x3}, 0x0, 0x0, 0xfffffffffffffffe)
+keyctl$restrict_keyring(0x1d, r0, &(0x7f0000000000)='.dead\x00', &(0x7f00000000c0)='keyring\x00')
+syz_mount_image$ext4(&(0x7f00000004c0)='ext4\x00', &(0x7f0000000580)='./file0\x00', 0x0, &(0x7f00000005c0), 0x1, 0x535, &(0x7f0000000b40)="$eJzs3c9vHFcdAPDv7NrGdV2clh7aShCLHooU2etfVQ03ww1RCZFeioQiK9naIWuvZa+l2if3X0CICxIqEicujsSJW67AhWOQOHDgVKlCJUjAISya2Zl0be82jrrdaTKfjzSZ9/ZNdt7X4+/Om5kdTwCVNZ/+k0TMRsSfImKuVz27wHxvdrp6dzudkuh2r/8jyZb7cPXudrFo8f+ezyvTEfHdehLfTy6u9+Do+M5mq9Xcz+uNzs5e4+DoeOH2zuZWc6u5u7qysra+tv7Wm8sji/Xffz+++vI/N371iz/85vpP7n/y+7Rbs3lbfxyjMh/z+c9kMl7se30iIr436pWVpJ7H80Lfa8lEiR3iiaTb72sR8XqW/3NRDxsPqqKbGdr8SRd4ZtWyMXBSW4yIXrlWW1zsjeFfjplaq33QufZe+3D3Vm+sfCUma+/dbjWX8mOFKzGZpPXlrPxpfeVcfTUiGwP/vP5cVl+82W7dGusnHXDe8+fy/1/1Xv4DFeGQH6pL/kN1yX+oLvkP1SX/obrkP1SX/Ifqkv9QXfIfqkv+Q3XJf6ikH779djp1T/P733fbW7fvbO99e2Vpcefw5uLN9v7e4la7vZXdsbPz+Pdrtdt7y6tx+H6j0zzoNA6Ojm/stA93Ozey+/pvNCfHEBNwOS9evfeXJCJOvvNcNqWm8ja5Cs+2bjeJsu9BBspRL/sDCCiNU39QXY7xgQF/oveM6WENrdH3BRiPWtkdAErzxquu/0FVOf8P1eX8P1TXuTG+0wFQQc7/Q/XY4UN1zQ55/tcLfc/uWoqIr0bE/frkV4pnfQFPv0fP4f5cheQkYhTvo6DwTBemIuJL0I3LFMr+ZAK+aJ8m/fBljsbZIWDsPly9u11MZfdlnD7e6H0JIo37NJ96LRP5udHp7BrpzIPkzHclkhF9d2I+Iu5t/PlKOkW+HUbwtpd28kFEvDJo+yf58957V35mHtQvxP9SX/mV/PzRRPbc+MubP1d/muJ/NZ+n0zf64n/tCdZfdvwAVNO9dPyzNGj/V8v26fFo/3d2/DM7ovtDyt7/FeO/0wvjv9qj8V99yPjv6iXX8b+503eHtaXxn3z9r3PFlK4/nX+uoJ7Axx9EvDYw/iLe6SzW8/HXBmy7YT7a+OXPhrX1x5+Ogccdf/fXEW/E4PgLaanR2dlrHBwdL2R/x3Srubu6srK2vrb+1pvLjewaaaO4UnrRj376u+vD1v9l2P4zQ+J/3O//Ny+5jtkf/+23w9qK45/h27/20VTyTlYq7kt7f7PT2V+OmEp+cPH1lc/uS7FM8R5p/N96fXD+v5TH3/v9n7gQfzefpz+na/m9NGn5Yf7ZmC6/kPZv+93PzP/i+K+IvzgWHIc0/luP2f6D8j997b+XXMd/7v+xOayt7PgBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAynZwdHxns9Vq7n+BhbJjBAabeTAZ7/TVk4jo5vNaRFyLiHpefhgRk3l9ISKm0+VOIpYe9pVLjAUAAAAAAOj5fwAAAP//0cr4Xw==")
+r1 = add_key$fscrypt_provisioning(&(0x7f0000000100), &(0x7f0000000140)={'syz', 0x0}, &(0x7f0000000180)={0x0, 0x0, @a}, 0x48, r0)
+modify_ldt$read_default(0x2, 0x0, 0x0)
+keyctl$KEYCTL_PKEY_ENCRYPT(0x19, &(0x7f0000000200)={r1, 0xcb, 0xe7}, &(0x7f0000000240)={'enc=', 'pkcs1', ' hash=', {'sha512-ce\x00'}}, &(0x7f00000002c0)="fdaaa9e4ebdd28ecba7837bb1d9284ccab019e45b503215c2f465dea5ac67a0da8dcf8d953edc8b52f61579ebc4af907da722e81e5bfc391c10c22f80ad9437657c706d3a55cac9847f0cc3dae5d2fadf32e97a9c94d7ddee97a5c0005f1fe6d29a8f6e434b54eb7fe69d91e545169a0957179584bd9bb1c2bed1228915fe5f049307e7e5f9516bee50e03fd3b4bd0ec3e83fe642d05edda4a7a3eeb92e137ad4f009f0d7338fbc70c5037a0da0163e839accc2cf437c817eb5decc7026aa09ece86b028e5aea03c4e8612", &(0x7f00000003c0)=""/231)
+
+failed to symbolize report: failed to start scripts/get_maintainer.pl [scripts/get_maintainer.pl --git-min-percent=15 -f fs/ext4/extents_status.c]: fork/exec scripts/get_maintainer.pl: no such file or directory
+program crashed: kernel BUG in __es_tree_search
+testing program (duration=36.960800796s, {Threaded:true Repeat:true RepeatTimes:0 Procs:4 Slowdown:1 Sandbox:none SandboxArg:0 Leak:false NetInjection:false NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:false NicVF:false USB:false VhciInjection:false Wifi:false IEEE802154:false Sysctl:true Swap:true UseTmpDir:true HandleSegv:true Trace:false CallComments:true LegacyOptions:{Collide:false Fault:false FaultCall:0 FaultNth:0}}): add_key$keyring-keyctl$restrict_keyring-syz_mount_image$ext4-add_key$fscrypt_provisioning-modify_ldt$read_default
+detailed listing:
+executing program 0:
+r0 = add_key$keyring(&(0x7f0000000080), &(0x7f0000000040)={'syz', 0x3}, 0x0, 0x0, 0xfffffffffffffffe)
+keyctl$restrict_keyring(0x1d, r0, &(0x7f0000000000)='.dead\x00', &(0x7f00000000c0)='keyring\x00')
+syz_mount_image$ext4(&(0x7f00000004c0)='ext4\x00', &(0x7f0000000580)='./file0\x00', 0x0, &(0x7f00000005c0), 0x1, 0x535, &(0x7f0000000b40)="$eJzs3c9vHFcdAPDv7NrGdV2clh7aShCLHooU2etfVQ03ww1RCZFeioQiK9naIWuvZa+l2if3X0CICxIqEicujsSJW67AhWOQOHDgVKlCJUjAISya2Zl0be82jrrdaTKfjzSZ9/ZNdt7X4+/Om5kdTwCVNZ/+k0TMRsSfImKuVz27wHxvdrp6dzudkuh2r/8jyZb7cPXudrFo8f+ezyvTEfHdehLfTy6u9+Do+M5mq9Xcz+uNzs5e4+DoeOH2zuZWc6u5u7qysra+tv7Wm8sji/Xffz+++vI/N371iz/85vpP7n/y+7Rbs3lbfxyjMh/z+c9kMl7se30iIr436pWVpJ7H80Lfa8lEiR3iiaTb72sR8XqW/3NRDxsPqqKbGdr8SRd4ZtWyMXBSW4yIXrlWW1zsjeFfjplaq33QufZe+3D3Vm+sfCUma+/dbjWX8mOFKzGZpPXlrPxpfeVcfTUiGwP/vP5cVl+82W7dGusnHXDe8+fy/1/1Xv4DFeGQH6pL/kN1yX+oLvkP1SX/obrkP1SX/Ifqkv9QXfIfqkv+Q3XJf6ikH779djp1T/P733fbW7fvbO99e2Vpcefw5uLN9v7e4la7vZXdsbPz+Pdrtdt7y6tx+H6j0zzoNA6Ojm/stA93Ozey+/pvNCfHEBNwOS9evfeXJCJOvvNcNqWm8ja5Cs+2bjeJsu9BBspRL/sDCCiNU39QXY7xgQF/oveM6WENrdH3BRiPWtkdAErzxquu/0FVOf8P1eX8P1TXuTG+0wFQQc7/Q/XY4UN1zQ55/tcLfc/uWoqIr0bE/frkV4pnfQFPv0fP4f5cheQkYhTvo6DwTBemIuJL0I3LFMr+ZAK+aJ8m/fBljsbZIWDsPly9u11MZfdlnD7e6H0JIo37NJ96LRP5udHp7BrpzIPkzHclkhF9d2I+Iu5t/PlKOkW+HUbwtpd28kFEvDJo+yf58957V35mHtQvxP9SX/mV/PzRRPbc+MubP1d/muJ/NZ+n0zf64n/tCdZfdvwAVNO9dPyzNGj/V8v26fFo/3d2/DM7ovtDyt7/FeO/0wvjv9qj8V99yPjv6iXX8b+503eHtaXxn3z9r3PFlK4/nX+uoJ7Axx9EvDYw/iLe6SzW8/HXBmy7YT7a+OXPhrX1x5+Ogccdf/fXEW/E4PgLaanR2dlrHBwdL2R/x3Srubu6srK2vrb+1pvLjewaaaO4UnrRj376u+vD1v9l2P4zQ+J/3O//Ny+5jtkf/+23w9qK45/h27/20VTyTlYq7kt7f7PT2V+OmEp+cPH1lc/uS7FM8R5p/N96fXD+v5TH3/v9n7gQfzefpz+na/m9NGn5Yf7ZmC6/kPZv+93PzP/i+K+IvzgWHIc0/luP2f6D8j997b+XXMd/7v+xOayt7PgBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAynZwdHxns9Vq7n+BhbJjBAabeTAZ7/TVk4jo5vNaRFyLiHpefhgRk3l9ISKm0+VOIpYe9pVLjAUAAAAAAOj5fwAAAP//0cr4Xw==")
+add_key$fscrypt_provisioning(&(0x7f0000000100), &(0x7f0000000140)={'syz', 0x0}, &(0x7f0000000180)={0x0, 0x0, @a}, 0x48, r0)
+modify_ldt$read_default(0x2, 0x0, 0x0)
+
+failed to symbolize report: failed to start scripts/get_maintainer.pl [scripts/get_maintainer.pl --git-min-percent=15 -f fs/ext4/extents_status.c]: fork/exec scripts/get_maintainer.pl: no such file or directory
+program crashed: kernel BUG in __es_tree_search
+testing program (duration=36.960800796s, {Threaded:true Repeat:true RepeatTimes:0 Procs:4 Slowdown:1 Sandbox:none SandboxArg:0 Leak:false NetInjection:false NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:false NicVF:false USB:false VhciInjection:false Wifi:false IEEE802154:false Sysctl:true Swap:true UseTmpDir:true HandleSegv:true Trace:false CallComments:true LegacyOptions:{Collide:false Fault:false FaultCall:0 FaultNth:0}}): add_key$keyring-keyctl$restrict_keyring-syz_mount_image$ext4-add_key$fscrypt_provisioning
+detailed listing:
+executing program 0:
+r0 = add_key$keyring(&(0x7f0000000080), &(0x7f0000000040)={'syz', 0x3}, 0x0, 0x0, 0xfffffffffffffffe)
+keyctl$restrict_keyring(0x1d, r0, &(0x7f0000000000)='.dead\x00', &(0x7f00000000c0)='keyring\x00')
+syz_mount_image$ext4(&(0x7f00000004c0)='ext4\x00', &(0x7f0000000580)='./file0\x00', 0x0, &(0x7f00000005c0), 0x1, 0x535, &(0x7f0000000b40)="$eJzs3c9vHFcdAPDv7NrGdV2clh7aShCLHooU2etfVQ03ww1RCZFeioQiK9naIWuvZa+l2if3X0CICxIqEicujsSJW67AhWOQOHDgVKlCJUjAISya2Zl0be82jrrdaTKfjzSZ9/ZNdt7X4+/Om5kdTwCVNZ/+k0TMRsSfImKuVz27wHxvdrp6dzudkuh2r/8jyZb7cPXudrFo8f+ezyvTEfHdehLfTy6u9+Do+M5mq9Xcz+uNzs5e4+DoeOH2zuZWc6u5u7qysra+tv7Wm8sji/Xffz+++vI/N371iz/85vpP7n/y+7Rbs3lbfxyjMh/z+c9kMl7se30iIr436pWVpJ7H80Lfa8lEiR3iiaTb72sR8XqW/3NRDxsPqqKbGdr8SRd4ZtWyMXBSW4yIXrlWW1zsjeFfjplaq33QufZe+3D3Vm+sfCUma+/dbjWX8mOFKzGZpPXlrPxpfeVcfTUiGwP/vP5cVl+82W7dGusnHXDe8+fy/1/1Xv4DFeGQH6pL/kN1yX+oLvkP1SX/obrkP1SX/Ifqkv9QXfIfqkv+Q3XJf6ikH779djp1T/P733fbW7fvbO99e2Vpcefw5uLN9v7e4la7vZXdsbPz+Pdrtdt7y6tx+H6j0zzoNA6Ojm/stA93Ozey+/pvNCfHEBNwOS9evfeXJCJOvvNcNqWm8ja5Cs+2bjeJsu9BBspRL/sDCCiNU39QXY7xgQF/oveM6WENrdH3BRiPWtkdAErzxquu/0FVOf8P1eX8P1TXuTG+0wFQQc7/Q/XY4UN1zQ55/tcLfc/uWoqIr0bE/frkV4pnfQFPv0fP4f5cheQkYhTvo6DwTBemIuJL0I3LFMr+ZAK+aJ8m/fBljsbZIWDsPly9u11MZfdlnD7e6H0JIo37NJ96LRP5udHp7BrpzIPkzHclkhF9d2I+Iu5t/PlKOkW+HUbwtpd28kFEvDJo+yf58957V35mHtQvxP9SX/mV/PzRRPbc+MubP1d/muJ/NZ+n0zf64n/tCdZfdvwAVNO9dPyzNGj/V8v26fFo/3d2/DM7ovtDyt7/FeO/0wvjv9qj8V99yPjv6iXX8b+503eHtaXxn3z9r3PFlK4/nX+uoJ7Axx9EvDYw/iLe6SzW8/HXBmy7YT7a+OXPhrX1x5+Ogccdf/fXEW/E4PgLaanR2dlrHBwdL2R/x3Srubu6srK2vrb+1pvLjewaaaO4UnrRj376u+vD1v9l2P4zQ+J/3O//Ny+5jtkf/+23w9qK45/h27/20VTyTlYq7kt7f7PT2V+OmEp+cPH1lc/uS7FM8R5p/N96fXD+v5TH3/v9n7gQfzefpz+na/m9NGn5Yf7ZmC6/kPZv+93PzP/i+K+IvzgWHIc0/luP2f6D8j997b+XXMd/7v+xOayt7PgBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAynZwdHxns9Vq7n+BhbJjBAabeTAZ7/TVk4jo5vNaRFyLiHpefhgRk3l9ISKm0+VOIpYe9pVLjAUAAAAAAOj5fwAAAP//0cr4Xw==")
+add_key$fscrypt_provisioning(&(0x7f0000000100), &(0x7f0000000140)={'syz', 0x0}, &(0x7f0000000180)={0x0, 0x0, @a}, 0x48, r0)
+
+failed to symbolize report: failed to start scripts/get_maintainer.pl [scripts/get_maintainer.pl --git-min-percent=15 -f fs/ext4/extents_status.c]: fork/exec scripts/get_maintainer.pl: no such file or directory
+program crashed: kernel BUG in __es_tree_search
+testing program (duration=36.960800796s, {Threaded:true Repeat:true RepeatTimes:0 Procs:4 Slowdown:1 Sandbox:none SandboxArg:0 Leak:false NetInjection:false NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:false NicVF:false USB:false VhciInjection:false Wifi:false IEEE802154:false Sysctl:true Swap:true UseTmpDir:true HandleSegv:true Trace:false CallComments:true LegacyOptions:{Collide:false Fault:false FaultCall:0 FaultNth:0}}): add_key$keyring-keyctl$restrict_keyring-syz_mount_image$ext4
+detailed listing:
+executing program 0:
+r0 = add_key$keyring(&(0x7f0000000080), &(0x7f0000000040)={'syz', 0x3}, 0x0, 0x0, 0xfffffffffffffffe)
+keyctl$restrict_keyring(0x1d, r0, &(0x7f0000000000)='.dead\x00', &(0x7f00000000c0)='keyring\x00')
+syz_mount_image$ext4(&(0x7f00000004c0)='ext4\x00', &(0x7f0000000580)='./file0\x00', 0x0, &(0x7f00000005c0), 0x1, 0x535, &(0x7f0000000b40)="$eJzs3c9vHFcdAPDv7NrGdV2clh7aShCLHooU2etfVQ03ww1RCZFeioQiK9naIWuvZa+l2if3X0CICxIqEicujsSJW67AhWOQOHDgVKlCJUjAISya2Zl0be82jrrdaTKfjzSZ9/ZNdt7X4+/Om5kdTwCVNZ/+k0TMRsSfImKuVz27wHxvdrp6dzudkuh2r/8jyZb7cPXudrFo8f+ezyvTEfHdehLfTy6u9+Do+M5mq9Xcz+uNzs5e4+DoeOH2zuZWc6u5u7qysra+tv7Wm8sji/Xffz+++vI/N371iz/85vpP7n/y+7Rbs3lbfxyjMh/z+c9kMl7se30iIr436pWVpJ7H80Lfa8lEiR3iiaTb72sR8XqW/3NRDxsPqqKbGdr8SRd4ZtWyMXBSW4yIXrlWW1zsjeFfjplaq33QufZe+3D3Vm+sfCUma+/dbjWX8mOFKzGZpPXlrPxpfeVcfTUiGwP/vP5cVl+82W7dGusnHXDe8+fy/1/1Xv4DFeGQH6pL/kN1yX+oLvkP1SX/obrkP1SX/Ifqkv9QXfIfqkv+Q3XJf6ikH779djp1T/P733fbW7fvbO99e2Vpcefw5uLN9v7e4la7vZXdsbPz+Pdrtdt7y6tx+H6j0zzoNA6Ojm/stA93Ozey+/pvNCfHEBNwOS9evfeXJCJOvvNcNqWm8ja5Cs+2bjeJsu9BBspRL/sDCCiNU39QXY7xgQF/oveM6WENrdH3BRiPWtkdAErzxquu/0FVOf8P1eX8P1TXuTG+0wFQQc7/Q/XY4UN1zQ55/tcLfc/uWoqIr0bE/frkV4pnfQFPv0fP4f5cheQkYhTvo6DwTBemIuJL0I3LFMr+ZAK+aJ8m/fBljsbZIWDsPly9u11MZfdlnD7e6H0JIo37NJ96LRP5udHp7BrpzIPkzHclkhF9d2I+Iu5t/PlKOkW+HUbwtpd28kFEvDJo+yf58957V35mHtQvxP9SX/mV/PzRRPbc+MubP1d/muJ/NZ+n0zf64n/tCdZfdvwAVNO9dPyzNGj/V8v26fFo/3d2/DM7ovtDyt7/FeO/0wvjv9qj8V99yPjv6iXX8b+503eHtaXxn3z9r3PFlK4/nX+uoJ7Axx9EvDYw/iLe6SzW8/HXBmy7YT7a+OXPhrX1x5+Ogccdf/fXEW/E4PgLaanR2dlrHBwdL2R/x3Srubu6srK2vrb+1pvLjewaaaO4UnrRj376u+vD1v9l2P4zQ+J/3O//Ny+5jtkf/+23w9qK45/h27/20VTyTlYq7kt7f7PT2V+OmEp+cPH1lc/uS7FM8R5p/N96fXD+v5TH3/v9n7gQfzefpz+na/m9NGn5Yf7ZmC6/kPZv+93PzP/i+K+IvzgWHIc0/luP2f6D8j997b+XXMd/7v+xOayt7PgBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAynZwdHxns9Vq7n+BhbJjBAabeTAZ7/TVk4jo5vNaRFyLiHpefhgRk3l9ISKm0+VOIpYe9pVLjAUAAAAAAOj5fwAAAP//0cr4Xw==")
+
+failed to symbolize report: failed to start scripts/get_maintainer.pl [scripts/get_maintainer.pl --git-min-percent=15 -f fs/ext4/extents_status.c]: fork/exec scripts/get_maintainer.pl: no such file or directory
+program crashed: kernel BUG in __es_tree_search
+testing program (duration=36.960800796s, {Threaded:true Repeat:true RepeatTimes:0 Procs:4 Slowdown:1 Sandbox:none SandboxArg:0 Leak:false NetInjection:false NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:false NicVF:false USB:false VhciInjection:false Wifi:false IEEE802154:false Sysctl:true Swap:true UseTmpDir:true HandleSegv:true Trace:false CallComments:true LegacyOptions:{Collide:false Fault:false FaultCall:0 FaultNth:0}}): add_key$keyring-keyctl$restrict_keyring
+detailed listing:
+executing program 0:
+r0 = add_key$keyring(&(0x7f0000000080), &(0x7f0000000040)={'syz', 0x3}, 0x0, 0x0, 0xfffffffffffffffe)
+keyctl$restrict_keyring(0x1d, r0, &(0x7f0000000000)='.dead\x00', &(0x7f00000000c0)='keyring\x00')
+
+program did not crash
+testing program (duration=36.960800796s, {Threaded:true Repeat:true RepeatTimes:0 Procs:4 Slowdown:1 Sandbox:none SandboxArg:0 Leak:false NetInjection:false NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:false NicVF:false USB:false VhciInjection:false Wifi:false IEEE802154:false Sysctl:true Swap:true UseTmpDir:true HandleSegv:true Trace:false CallComments:true LegacyOptions:{Collide:false Fault:false FaultCall:0 FaultNth:0}}): add_key$keyring-syz_mount_image$ext4
+detailed listing:
+executing program 0:
+add_key$keyring(&(0x7f0000000080), &(0x7f0000000040)={'syz', 0x3}, 0x0, 0x0, 0xfffffffffffffffe)
+syz_mount_image$ext4(&(0x7f00000004c0)='ext4\x00', &(0x7f0000000580)='./file0\x00', 0x0, &(0x7f00000005c0), 0x1, 0x535, &(0x7f0000000b40)="$eJzs3c9vHFcdAPDv7NrGdV2clh7aShCLHooU2etfVQ03ww1RCZFeioQiK9naIWuvZa+l2if3X0CICxIqEicujsSJW67AhWOQOHDgVKlCJUjAISya2Zl0be82jrrdaTKfjzSZ9/ZNdt7X4+/Om5kdTwCVNZ/+k0TMRsSfImKuVz27wHxvdrp6dzudkuh2r/8jyZb7cPXudrFo8f+ezyvTEfHdehLfTy6u9+Do+M5mq9Xcz+uNzs5e4+DoeOH2zuZWc6u5u7qysra+tv7Wm8sji/Xffz+++vI/N371iz/85vpP7n/y+7Rbs3lbfxyjMh/z+c9kMl7se30iIr436pWVpJ7H80Lfa8lEiR3iiaTb72sR8XqW/3NRDxsPqqKbGdr8SRd4ZtWyMXBSW4yIXrlWW1zsjeFfjplaq33QufZe+3D3Vm+sfCUma+/dbjWX8mOFKzGZpPXlrPxpfeVcfTUiGwP/vP5cVl+82W7dGusnHXDe8+fy/1/1Xv4DFeGQH6pL/kN1yX+oLvkP1SX/obrkP1SX/Ifqkv9QXfIfqkv+Q3XJf6ikH779djp1T/P733fbW7fvbO99e2Vpcefw5uLN9v7e4la7vZXdsbPz+Pdrtdt7y6tx+H6j0zzoNA6Ojm/stA93Ozey+/pvNCfHEBNwOS9evfeXJCJOvvNcNqWm8ja5Cs+2bjeJsu9BBspRL/sDCCiNU39QXY7xgQF/oveM6WENrdH3BRiPWtkdAErzxquu/0FVOf8P1eX8P1TXuTG+0wFQQc7/Q/XY4UN1zQ55/tcLfc/uWoqIr0bE/frkV4pnfQFPv0fP4f5cheQkYhTvo6DwTBemIuJL0I3LFMr+ZAK+aJ8m/fBljsbZIWDsPly9u11MZfdlnD7e6H0JIo37NJ96LRP5udHp7BrpzIPkzHclkhF9d2I+Iu5t/PlKOkW+HUbwtpd28kFEvDJo+yf58957V35mHtQvxP9SX/mV/PzRRPbc+MubP1d/muJ/NZ+n0zf64n/tCdZfdvwAVNO9dPyzNGj/V8v26fFo/3d2/DM7ovtDyt7/FeO/0wvjv9qj8V99yPjv6iXX8b+503eHtaXxn3z9r3PFlK4/nX+uoJ7Axx9EvDYw/iLe6SzW8/HXBmy7YT7a+OXPhrX1x5+Ogccdf/fXEW/E4PgLaanR2dlrHBwdL2R/x3Srubu6srK2vrb+1pvLjewaaaO4UnrRj376u+vD1v9l2P4zQ+J/3O//Ny+5jtkf/+23w9qK45/h27/20VTyTlYq7kt7f7PT2V+OmEp+cPH1lc/uS7FM8R5p/N96fXD+v5TH3/v9n7gQfzefpz+na/m9NGn5Yf7ZmC6/kPZv+93PzP/i+K+IvzgWHIc0/luP2f6D8j997b+XXMd/7v+xOayt7PgBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAynZwdHxns9Vq7n+BhbJjBAabeTAZ7/TVk4jo5vNaRFyLiHpefhgRk3l9ISKm0+VOIpYe9pVLjAUAAAAAAOj5fwAAAP//0cr4Xw==")
+
+failed to symbolize report: failed to start scripts/get_maintainer.pl [scripts/get_maintainer.pl --git-min-percent=15 -f fs/ext4/extents_status.c]: fork/exec scripts/get_maintainer.pl: no such file or directory
+program crashed: kernel BUG in __es_tree_search
+testing program (duration=36.960800796s, {Threaded:true Repeat:true RepeatTimes:0 Procs:4 Slowdown:1 Sandbox:none SandboxArg:0 Leak:false NetInjection:false NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:false NicVF:false USB:false VhciInjection:false Wifi:false IEEE802154:false Sysctl:true Swap:true UseTmpDir:true HandleSegv:true Trace:false CallComments:true LegacyOptions:{Collide:false Fault:false FaultCall:0 FaultNth:0}}): syz_mount_image$ext4
+detailed listing:
+executing program 0:
+syz_mount_image$ext4(&(0x7f00000004c0)='ext4\x00', &(0x7f0000000580)='./file0\x00', 0x0, &(0x7f00000005c0), 0x1, 0x535, &(0x7f0000000b40)="$eJzs3c9vHFcdAPDv7NrGdV2clh7aShCLHooU2etfVQ03ww1RCZFeioQiK9naIWuvZa+l2if3X0CICxIqEicujsSJW67AhWOQOHDgVKlCJUjAISya2Zl0be82jrrdaTKfjzSZ9/ZNdt7X4+/Om5kdTwCVNZ/+k0TMRsSfImKuVz27wHxvdrp6dzudkuh2r/8jyZb7cPXudrFo8f+ezyvTEfHdehLfTy6u9+Do+M5mq9Xcz+uNzs5e4+DoeOH2zuZWc6u5u7qysra+tv7Wm8sji/Xffz+++vI/N371iz/85vpP7n/y+7Rbs3lbfxyjMh/z+c9kMl7se30iIr436pWVpJ7H80Lfa8lEiR3iiaTb72sR8XqW/3NRDxsPqqKbGdr8SRd4ZtWyMXBSW4yIXrlWW1zsjeFfjplaq33QufZe+3D3Vm+sfCUma+/dbjWX8mOFKzGZpPXlrPxpfeVcfTUiGwP/vP5cVl+82W7dGusnHXDe8+fy/1/1Xv4DFeGQH6pL/kN1yX+oLvkP1SX/obrkP1SX/Ifqkv9QXfIfqkv+Q3XJf6ikH779djp1T/P733fbW7fvbO99e2Vpcefw5uLN9v7e4la7vZXdsbPz+Pdrtdt7y6tx+H6j0zzoNA6Ojm/stA93Ozey+/pvNCfHEBNwOS9evfeXJCJOvvNcNqWm8ja5Cs+2bjeJsu9BBspRL/sDCCiNU39QXY7xgQF/oveM6WENrdH3BRiPWtkdAErzxquu/0FVOf8P1eX8P1TXuTG+0wFQQc7/Q/XY4UN1zQ55/tcLfc/uWoqIr0bE/frkV4pnfQFPv0fP4f5cheQkYhTvo6DwTBemIuJL0I3LFMr+ZAK+aJ8m/fBljsbZIWDsPly9u11MZfdlnD7e6H0JIo37NJ96LRP5udHp7BrpzIPkzHclkhF9d2I+Iu5t/PlKOkW+HUbwtpd28kFEvDJo+yf58957V35mHtQvxP9SX/mV/PzRRPbc+MubP1d/muJ/NZ+n0zf64n/tCdZfdvwAVNO9dPyzNGj/V8v26fFo/3d2/DM7ovtDyt7/FeO/0wvjv9qj8V99yPjv6iXX8b+503eHtaXxn3z9r3PFlK4/nX+uoJ7Axx9EvDYw/iLe6SzW8/HXBmy7YT7a+OXPhrX1x5+Ogccdf/fXEW/E4PgLaanR2dlrHBwdL2R/x3Srubu6srK2vrb+1pvLjewaaaO4UnrRj376u+vD1v9l2P4zQ+J/3O//Ny+5jtkf/+23w9qK45/h27/20VTyTlYq7kt7f7PT2V+OmEp+cPH1lc/uS7FM8R5p/N96fXD+v5TH3/v9n7gQfzefpz+na/m9NGn5Yf7ZmC6/kPZv+93PzP/i+K+IvzgWHIc0/luP2f6D8j997b+XXMd/7v+xOayt7PgBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAynZwdHxns9Vq7n+BhbJjBAabeTAZ7/TVk4jo5vNaRFyLiHpefhgRk3l9ISKm0+VOIpYe9pVLjAUAAAAAAOj5fwAAAP//0cr4Xw==")
+
+failed to symbolize report: failed to start scripts/get_maintainer.pl [scripts/get_maintainer.pl --git-min-percent=15 -f fs/ext4/extents_status.c]: fork/exec scripts/get_maintainer.pl: no such file or directory
+program crashed: kernel BUG in __es_tree_search
+extracting C reproducer
+testing compiled C program (duration=36.960800796s, {Threaded:true Repeat:true RepeatTimes:0 Procs:4 Slowdown:1 Sandbox:none SandboxArg:0 Leak:false NetInjection:false NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:false NicVF:false USB:false VhciInjection:false Wifi:false IEEE802154:false Sysctl:true Swap:true UseTmpDir:true HandleSegv:true Trace:false CallComments:true LegacyOptions:{Collide:false Fault:false FaultCall:0 FaultNth:0}}): syz_mount_image$ext4
+failed to symbolize report: failed to start scripts/get_maintainer.pl [scripts/get_maintainer.pl --git-min-percent=15 -f fs/ext4/extents_status.c]: fork/exec scripts/get_maintainer.pl: no such file or directory
+program crashed: kernel BUG in __es_tree_search
+simplifying C reproducer
+testing compiled C program (duration=36.960800796s, {Threaded:false Repeat:true RepeatTimes:0 Procs:4 Slowdown:1 Sandbox:none SandboxArg:0 Leak:false NetInjection:false NetDevices:true NetReset:true Cgroups:true BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:false NicVF:false USB:false VhciInjection:false Wifi:false IEEE802154:false Sysctl:true Swap:true UseTmpDir:true HandleSegv:true Trace:false CallComments:true LegacyOptions:{Collide:false Fault:false FaultCall:0 FaultNth:0}}): syz_mount_image$ext4
+failed to symbolize report: failed to start scripts/get_maintainer.pl [scripts/get_maintainer.pl --git-min-percent=15 -f fs/ext4/extents_status.c]: fork/exec scripts/get_maintainer.pl: no such file or directory
+program crashed: kernel BUG in __es_tree_search
+testing compiled C program (duration=36.960800796s, {Threaded:false Repeat:false RepeatTimes:0 Procs:1 Slowdown:1 Sandbox:none SandboxArg:0 Leak:false NetInjection:false NetDevices:true NetReset:false Cgroups:false BinfmtMisc:true CloseFDs:true KCSAN:false DevlinkPCI:false NicVF:false USB:false VhciInjection:false Wifi:false IEEE802154:false Sysctl:true Swap:true UseTmpDir:true HandleSegv:true Trace:false CallComments:true LegacyOptions:{Collide:false Fault:false FaultCall:0 FaultNth:0}}): syz_mount_image$ext4
+failed to symbolize report: failed to start scripts/get_maintainer.pl [scripts/get_maintainer.pl --git-min-percent=15 -f fs/ext4/extents_status.c]: fork/exec scripts/get_maintainer.pl: no such file or directory
+program crashed: kernel BUG in __es_tree_search
+testing compiled C program (duration=36.960800796s, {Threaded:false Repeat:false RepeatTimes:0 Procs:1 Slowdown:1 Sandbox: SandboxArg:0 Leak:false NetInjection:false NetDevices:false NetReset:false Cgroups:false BinfmtMisc:false CloseFDs:false KCSAN:false DevlinkPCI:false NicVF:false USB:false VhciInjection:false Wifi:false IEEE802154:false Sysctl:true Swap:false UseTmpDir:true HandleSegv:true Trace:false CallComments:true LegacyOptions:{Collide:false Fault:false FaultCall:0 FaultNth:0}}): syz_mount_image$ext4
+failed to symbolize report: failed to start scripts/get_maintainer.pl [scripts/get_maintainer.pl --git-min-percent=15 -f fs/ext4/extents_status.c]: fork/exec scripts/get_maintainer.pl: no such file or directory
+program crashed: kernel BUG in __es_tree_search
+testing compiled C program (duration=36.960800796s, {Threaded:false Repeat:false RepeatTimes:0 Procs:1 Slowdown:1 Sandbox: SandboxArg:0 Leak:false NetInjection:false NetDevices:false NetReset:false Cgroups:false BinfmtMisc:false CloseFDs:false KCSAN:false DevlinkPCI:false NicVF:false USB:false VhciInjection:false Wifi:false IEEE802154:false Sysctl:true Swap:false UseTmpDir:false HandleSegv:true Trace:false CallComments:true LegacyOptions:{Collide:false Fault:false FaultCall:0 FaultNth:0}}): syz_mount_image$ext4
+failed to symbolize report: failed to start scripts/get_maintainer.pl [scripts/get_maintainer.pl --git-min-percent=15 -f fs/ext4/extents_status.c]: fork/exec scripts/get_maintainer.pl: no such file or directory
+program crashed: kernel BUG in __es_tree_search
+testing compiled C program (duration=36.960800796s, {Threaded:false Repeat:false RepeatTimes:0 Procs:1 Slowdown:1 Sandbox: SandboxArg:0 Leak:false NetInjection:false NetDevices:false NetReset:false Cgroups:false BinfmtMisc:false CloseFDs:false KCSAN:false DevlinkPCI:false NicVF:false USB:false VhciInjection:false Wifi:false IEEE802154:false Sysctl:true Swap:false UseTmpDir:false HandleSegv:false Trace:false CallComments:true LegacyOptions:{Collide:false Fault:false FaultCall:0 FaultNth:0}}): syz_mount_image$ext4
+failed to symbolize report: failed to start scripts/get_maintainer.pl [scripts/get_maintainer.pl --git-min-percent=15 -f fs/ext4/extents_status.c]: fork/exec scripts/get_maintainer.pl: no such file or directory
+program crashed: kernel BUG in __es_tree_search
+testing compiled C program (duration=36.960800796s, {Threaded:false Repeat:false RepeatTimes:0 Procs:1 Slowdown:1 Sandbox: SandboxArg:0 Leak:false NetInjection:false NetDevices:false NetReset:false Cgroups:false BinfmtMisc:false CloseFDs:false KCSAN:false DevlinkPCI:false NicVF:false USB:false VhciInjection:false Wifi:false IEEE802154:false Sysctl:false Swap:false UseTmpDir:false HandleSegv:false Trace:false CallComments:true LegacyOptions:{Collide:false Fault:false FaultCall:0 FaultNth:0}}): syz_mount_image$ext4
+failed to symbolize report: failed to start scripts/get_maintainer.pl [scripts/get_maintainer.pl --git-min-percent=15 -f fs/ext4/extents_status.c]: fork/exec scripts/get_maintainer.pl: no such file or directory
+program crashed: kernel BUG in __es_tree_search
+testing program (duration=36.960800796s, {Threaded:false Repeat:false RepeatTimes:0 Procs:1 Slowdown:1 Sandbox: SandboxArg:0 Leak:false NetInjection:false NetDevices:false NetReset:false Cgroups:false BinfmtMisc:false CloseFDs:false KCSAN:false DevlinkPCI:false NicVF:false USB:false VhciInjection:false Wifi:false IEEE802154:false Sysctl:false Swap:false UseTmpDir:false HandleSegv:false Trace:false CallComments:true LegacyOptions:{Collide:false Fault:false FaultCall:0 FaultNth:0}}): syz_mount_image$ext4
+detailed listing:
+executing program 0:
+syz_mount_image$ext4(&(0x7f00000004c0)='ext4\x00', &(0x7f0000000580)='./file0\x00', 0x0, &(0x7f00000005c0), 0x1, 0x535, &(0x7f0000000b40)="$eJzs3c9vHFcdAPDv7NrGdV2clh7aShCLHooU2etfVQ03ww1RCZFeioQiK9naIWuvZa+l2if3X0CICxIqEicujsSJW67AhWOQOHDgVKlCJUjAISya2Zl0be82jrrdaTKfjzSZ9/ZNdt7X4+/Om5kdTwCVNZ/+k0TMRsSfImKuVz27wHxvdrp6dzudkuh2r/8jyZb7cPXudrFo8f+ezyvTEfHdehLfTy6u9+Do+M5mq9Xcz+uNzs5e4+DoeOH2zuZWc6u5u7qysra+tv7Wm8sji/Xffz+++vI/N371iz/85vpP7n/y+7Rbs3lbfxyjMh/z+c9kMl7se30iIr436pWVpJ7H80Lfa8lEiR3iiaTb72sR8XqW/3NRDxsPqqKbGdr8SRd4ZtWyMXBSW4yIXrlWW1zsjeFfjplaq33QufZe+3D3Vm+sfCUma+/dbjWX8mOFKzGZpPXlrPxpfeVcfTUiGwP/vP5cVl+82W7dGusnHXDe8+fy/1/1Xv4DFeGQH6pL/kN1yX+oLvkP1SX/obrkP1SX/Ifqkv9QXfIfqkv+Q3XJf6ikH779djp1T/P733fbW7fvbO99e2Vpcefw5uLN9v7e4la7vZXdsbPz+Pdrtdt7y6tx+H6j0zzoNA6Ojm/stA93Ozey+/pvNCfHEBNwOS9evfeXJCJOvvNcNqWm8ja5Cs+2bjeJsu9BBspRL/sDCCiNU39QXY7xgQF/oveM6WENrdH3BRiPWtkdAErzxquu/0FVOf8P1eX8P1TXuTG+0wFQQc7/Q/XY4UN1zQ55/tcLfc/uWoqIr0bE/frkV4pnfQFPv0fP4f5cheQkYhTvo6DwTBemIuJL0I3LFMr+ZAK+aJ8m/fBljsbZIWDsPly9u11MZfdlnD7e6H0JIo37NJ96LRP5udHp7BrpzIPkzHclkhF9d2I+Iu5t/PlKOkW+HUbwtpd28kFEvDJo+yf58957V35mHtQvxP9SX/mV/PzRRPbc+MubP1d/muJ/NZ+n0zf64n/tCdZfdvwAVNO9dPyzNGj/V8v26fFo/3d2/DM7ovtDyt7/FeO/0wvjv9qj8V99yPjv6iXX8b+503eHtaXxn3z9r3PFlK4/nX+uoJ7Axx9EvDYw/iLe6SzW8/HXBmy7YT7a+OXPhrX1x5+Ogccdf/fXEW/E4PgLaanR2dlrHBwdL2R/x3Srubu6srK2vrb+1pvLjewaaaO4UnrRj376u+vD1v9l2P4zQ+J/3O//Ny+5jtkf/+23w9qK45/h27/20VTyTlYq7kt7f7PT2V+OmEp+cPH1lc/uS7FM8R5p/N96fXD+v5TH3/v9n7gQfzefpz+na/m9NGn5Yf7ZmC6/kPZv+93PzP/i+K+IvzgWHIc0/luP2f6D8j997b+XXMd/7v+xOayt7PgBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAynZwdHxns9Vq7n+BhbJjBAabeTAZ7/TVk4jo5vNaRFyLiHpefhgRk3l9ISKm0+VOIpYe9pVLjAUAAAAAAOj5fwAAAP//0cr4Xw==")
+
+failed to symbolize report: failed to start scripts/get_maintainer.pl [scripts/get_maintainer.pl --git-min-percent=15 -f fs/ext4/extents_status.c]: fork/exec scripts/get_maintainer.pl: no such file or directory
+program crashed: kernel BUG in __es_tree_search
+validation run: crashed=true
+testing program (duration=36.960800796s, {Threaded:false Repeat:false RepeatTimes:0 Procs:1 Slowdown:1 Sandbox: SandboxArg:0 Leak:false NetInjection:false NetDevices:false NetReset:false Cgroups:false BinfmtMisc:false CloseFDs:false KCSAN:false DevlinkPCI:false NicVF:false USB:false VhciInjection:false Wifi:false IEEE802154:false Sysctl:false Swap:false UseTmpDir:false HandleSegv:false Trace:false CallComments:true LegacyOptions:{Collide:false Fault:false FaultCall:0 FaultNth:0}}): syz_mount_image$ext4
+detailed listing:
+executing program 0:
+syz_mount_image$ext4(&(0x7f00000004c0)='ext4\x00', &(0x7f0000000580)='./file0\x00', 0x0, &(0x7f00000005c0), 0x1, 0x535, &(0x7f0000000b40)="$eJzs3c9vHFcdAPDv7NrGdV2clh7aShCLHooU2etfVQ03ww1RCZFeioQiK9naIWuvZa+l2if3X0CICxIqEicujsSJW67AhWOQOHDgVKlCJUjAISya2Zl0be82jrrdaTKfjzSZ9/ZNdt7X4+/Om5kdTwCVNZ/+k0TMRsSfImKuVz27wHxvdrp6dzudkuh2r/8jyZb7cPXudrFo8f+ezyvTEfHdehLfTy6u9+Do+M5mq9Xcz+uNzs5e4+DoeOH2zuZWc6u5u7qysra+tv7Wm8sji/Xffz+++vI/N371iz/85vpP7n/y+7Rbs3lbfxyjMh/z+c9kMl7se30iIr436pWVpJ7H80Lfa8lEiR3iiaTb72sR8XqW/3NRDxsPqqKbGdr8SRd4ZtWyMXBSW4yIXrlWW1zsjeFfjplaq33QufZe+3D3Vm+sfCUma+/dbjWX8mOFKzGZpPXlrPxpfeVcfTUiGwP/vP5cVl+82W7dGusnHXDe8+fy/1/1Xv4DFeGQH6pL/kN1yX+oLvkP1SX/obrkP1SX/Ifqkv9QXfIfqkv+Q3XJf6ikH779djp1T/P733fbW7fvbO99e2Vpcefw5uLN9v7e4la7vZXdsbPz+Pdrtdt7y6tx+H6j0zzoNA6Ojm/stA93Ozey+/pvNCfHEBNwOS9evfeXJCJOvvNcNqWm8ja5Cs+2bjeJsu9BBspRL/sDCCiNU39QXY7xgQF/oveM6WENrdH3BRiPWtkdAErzxquu/0FVOf8P1eX8P1TXuTG+0wFQQc7/Q/XY4UN1zQ55/tcLfc/uWoqIr0bE/frkV4pnfQFPv0fP4f5cheQkYhTvo6DwTBemIuJL0I3LFMr+ZAK+aJ8m/fBljsbZIWDsPly9u11MZfdlnD7e6H0JIo37NJ96LRP5udHp7BrpzIPkzHclkhF9d2I+Iu5t/PlKOkW+HUbwtpd28kFEvDJo+yf58957V35mHtQvxP9SX/mV/PzRRPbc+MubP1d/muJ/NZ+n0zf64n/tCdZfdvwAVNO9dPyzNGj/V8v26fFo/3d2/DM7ovtDyt7/FeO/0wvjv9qj8V99yPjv6iXX8b+503eHtaXxn3z9r3PFlK4/nX+uoJ7Axx9EvDYw/iLe6SzW8/HXBmy7YT7a+OXPhrX1x5+Ogccdf/fXEW/E4PgLaanR2dlrHBwdL2R/x3Srubu6srK2vrb+1pvLjewaaaO4UnrRj376u+vD1v9l2P4zQ+J/3O//Ny+5jtkf/+23w9qK45/h27/20VTyTlYq7kt7f7PT2V+OmEp+cPH1lc/uS7FM8R5p/N96fXD+v5TH3/v9n7gQfzefpz+na/m9NGn5Yf7ZmC6/kPZv+93PzP/i+K+IvzgWHIc0/luP2f6D8j997b+XXMd/7v+xOayt7PgBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAynZwdHxns9Vq7n+BhbJjBAabeTAZ7/TVk4jo5vNaRFyLiHpefhgRk3l9ISKm0+VOIpYe9pVLjAUAAAAAAOj5fwAAAP//0cr4Xw==")
+
+failed to symbolize report: failed to start scripts/get_maintainer.pl [scripts/get_maintainer.pl --git-min-percent=15 -f fs/ext4/extents_status.c]: fork/exec scripts/get_maintainer.pl: no such file or directory
+program crashed: kernel BUG in __es_tree_search
+validation run: crashed=true
+testing program (duration=36.960800796s, {Threaded:false Repeat:false RepeatTimes:0 Procs:1 Slowdown:1 Sandbox: SandboxArg:0 Leak:false NetInjection:false NetDevices:false NetReset:false Cgroups:false BinfmtMisc:false CloseFDs:false KCSAN:false DevlinkPCI:false NicVF:false USB:false VhciInjection:false Wifi:false IEEE802154:false Sysctl:false Swap:false UseTmpDir:false HandleSegv:false Trace:false CallComments:true LegacyOptions:{Collide:false Fault:false FaultCall:0 FaultNth:0}}): syz_mount_image$ext4
+detailed listing:
+executing program 0:
+syz_mount_image$ext4(&(0x7f00000004c0)='ext4\x00', &(0x7f0000000580)='./file0\x00', 0x0, &(0x7f00000005c0), 0x1, 0x535, &(0x7f0000000b40)="$eJzs3c9vHFcdAPDv7NrGdV2clh7aShCLHooU2etfVQ03ww1RCZFeioQiK9naIWuvZa+l2if3X0CICxIqEicujsSJW67AhWOQOHDgVKlCJUjAISya2Zl0be82jrrdaTKfjzSZ9/ZNdt7X4+/Om5kdTwCVNZ/+k0TMRsSfImKuVz27wHxvdrp6dzudkuh2r/8jyZb7cPXudrFo8f+ezyvTEfHdehLfTy6u9+Do+M5mq9Xcz+uNzs5e4+DoeOH2zuZWc6u5u7qysra+tv7Wm8sji/Xffz+++vI/N371iz/85vpP7n/y+7Rbs3lbfxyjMh/z+c9kMl7se30iIr436pWVpJ7H80Lfa8lEiR3iiaTb72sR8XqW/3NRDxsPqqKbGdr8SRd4ZtWyMXBSW4yIXrlWW1zsjeFfjplaq33QufZe+3D3Vm+sfCUma+/dbjWX8mOFKzGZpPXlrPxpfeVcfTUiGwP/vP5cVl+82W7dGusnHXDe8+fy/1/1Xv4DFeGQH6pL/kN1yX+oLvkP1SX/obrkP1SX/Ifqkv9QXfIfqkv+Q3XJf6ikH779djp1T/P733fbW7fvbO99e2Vpcefw5uLN9v7e4la7vZXdsbPz+Pdrtdt7y6tx+H6j0zzoNA6Ojm/stA93Ozey+/pvNCfHEBNwOS9evfeXJCJOvvNcNqWm8ja5Cs+2bjeJsu9BBspRL/sDCCiNU39QXY7xgQF/oveM6WENrdH3BRiPWtkdAErzxquu/0FVOf8P1eX8P1TXuTG+0wFQQc7/Q/XY4UN1zQ55/tcLfc/uWoqIr0bE/frkV4pnfQFPv0fP4f5cheQkYhTvo6DwTBemIuJL0I3LFMr+ZAK+aJ8m/fBljsbZIWDsPly9u11MZfdlnD7e6H0JIo37NJ96LRP5udHp7BrpzIPkzHclkhF9d2I+Iu5t/PlKOkW+HUbwtpd28kFEvDJo+yf58957V35mHtQvxP9SX/mV/PzRRPbc+MubP1d/muJ/NZ+n0zf64n/tCdZfdvwAVNO9dPyzNGj/V8v26fFo/3d2/DM7ovtDyt7/FeO/0wvjv9qj8V99yPjv6iXX8b+503eHtaXxn3z9r3PFlK4/nX+uoJ7Axx9EvDYw/iLe6SzW8/HXBmy7YT7a+OXPhrX1x5+Ogccdf/fXEW/E4PgLaanR2dlrHBwdL2R/x3Srubu6srK2vrb+1pvLjewaaaO4UnrRj376u+vD1v9l2P4zQ+J/3O//Ny+5jtkf/+23w9qK45/h27/20VTyTlYq7kt7f7PT2V+OmEp+cPH1lc/uS7FM8R5p/N96fXD+v5TH3/v9n7gQfzefpz+na/m9NGn5Yf7ZmC6/kPZv+93PzP/i+K+IvzgWHIc0/luP2f6D8j997b+XXMd/7v+xOayt7PgBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAynZwdHxns9Vq7n+BhbJjBAabeTAZ7/TVk4jo5vNaRFyLiHpefhgRk3l9ISKm0+VOIpYe9pVLjAUAAAAAAOj5fwAAAP//0cr4Xw==")
+
+failed to symbolize report: failed to start scripts/get_maintainer.pl [scripts/get_maintainer.pl --git-min-percent=15 -f fs/ext4/extents_status.c]: fork/exec scripts/get_maintainer.pl: no such file or directory
+program crashed: kernel BUG in __es_tree_search
+validation run: crashed=true
+reproducing took 10m54.150095989s
+repro crashed as (corrupted=false):
+audit: type=1401 audit(1772852878.481:7): op=setxattr invalid_context="u:object_r:app_data_file:s0:c512,c768"
+loop3: detected capacity change from 0 to 512
+------------[ cut here ]------------
+kernel BUG at fs/ext4/extents_status.c:202!
+invalid opcode: 0000 [#1] SMP KASAN PTI
+CPU: 1 PID: 1291 Comm: syz.3.17 Not tainted 5.15.0 #1
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
+RIP: 0010:__es_tree_search.isra.0+0x1c2/0x210
+Code: 89 df 44 89 ee e8 0e fb 9c ff 44 39 eb 77 1d 45 31 e4 e8 21 fa 9c ff 4c 89 e0 5b 5d 41 5c 41 5d 41 5e 41 5f c3 e8 0e fa 9c ff <0f> 0b e8 07 fa 9c ff 4c 89 e7 e8 5f 2b 8e 00 49 89 c4 eb d4 e8 f5
+RSP: 0018:ffff88800f3471f0 EFLAGS: 00010246
+RAX: 0000000000000000 RBX: 0000000000000001 RCX: ffff888010470000
+RDX: 0000000000000000 RSI: ffff888010470000 RDI: 0000000000000002
+RBP: 0000000000000001 R08: ffffffff819e5a82 R09: 0000000000000001
+R10: 0000000000000004 R11: ffffed1001e68e3a R12: ffff88800de13188
+R13: 0000000000000000 R14: dffffc0000000000 R15: 0000000000000001
+FS:  0000555556453500(0000) GS:ffff88806d100000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007fd03d71e7b0 CR3: 000000001042c000 CR4: 00000000000006e0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ ext4_es_cache_extent+0x217/0x3c0
+ ext4_cache_extents+0x238/0x2f0
+ ext4_find_extent+0x7ae/0xb10
+ ext4_ext_map_blocks+0x15e/0x3ea0
+ ext4_map_blocks+0x99e/0x1770
+ ext4_getblk+0x48f/0x6a0
+ ext4_bread+0x2a/0x1c0
+ ext4_quota_read+0x214/0x2e0
+ v2_read_header+0x79/0x110
+ v2_check_quota_file+0x73/0x180
+ dquot_load_quota_sb+0x510/0xef0
+ dquot_load_quota_inode+0x1ce/0x330
+ ext4_enable_quotas+0x48a/0x6d0
+ ext4_fill_super+0xcc68/0xceb0
+ mount_bdev+0x32c/0x3f0
+ legacy_get_tree+0xf3/0x200
+ vfs_get_tree+0x88/0x2e0
+ path_mount+0x693/0x1ba0
+ do_mount+0xf3/0x110
+ __x64_sys_mount+0x18f/0x230
+ do_syscall_64+0x3b/0x90
+ entry_SYSCALL_64_after_hwframe+0x44/0xae
+RIP: 0033:0x7fd03d772f2e
+Code: 48 c7 c0 ff ff ff ff eb aa e8 5e 20 00 00 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 40 00 f3 0f 1e fa 49 89 ca b8 a5 00 00 00 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 a8 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007fffba413da8 EFLAGS: 00000246 ORIG_RAX: 00000000000000a5
+RAX: ffffffffffffffda RBX: 0000000000000535 RCX: 00007fd03d772f2e
+RDX: 00002000000004c0 RSI: 0000200000000580 RDI: 00007fffba413e00
+RBP: 00007fffba413e40 R08: 00007fffba413e40 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 00002000000004c0
+R13: 0000200000000580 R14: 00007fffba413e00 R15: 00002000000005c0
+Modules linked in:
+---[ end trace d649beb0a876ad0c ]---
+RIP: 0010:__es_tree_search.isra.0+0x1c2/0x210
+Code: 89 df 44 89 ee e8 0e fb 9c ff 44 39 eb 77 1d 45 31 e4 e8 21 fa 9c ff 4c 89 e0 5b 5d 41 5c 41 5d 41 5e 41 5f c3 e8 0e fa 9c ff <0f> 0b e8 07 fa 9c ff 4c 89 e7 e8 5f 2b 8e 00 49 89 c4 eb d4 e8 f5
+RSP: 0018:ffff88800f3471f0 EFLAGS: 00010246
+RAX: 0000000000000000 RBX: 0000000000000001 RCX: ffff888010470000
+RDX: 0000000000000000 RSI: ffff888010470000 RDI: 0000000000000002
+RBP: 0000000000000001 R08: ffffffff819e5a82 R09: 0000000000000001
+R10: 0000000000000004 R11: ffffed1001e68e3a R12: ffff88800de13188
+R13: 0000000000000000 R14: dffffc0000000000 R15: 0000000000000001
+FS:  0000555556453500(0000) GS:ffff88806d100000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007fd03d71e7b0 CR3: 000000001042c000 CR4: 00000000000006e0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+syz-executor (836) used greatest stack depth: 25064 bytes left
+
+final repro crashed as (corrupted=false):
+audit: type=1401 audit(1772852878.481:7): op=setxattr invalid_context="u:object_r:app_data_file:s0:c512,c768"
+loop3: detected capacity change from 0 to 512
+------------[ cut here ]------------
+kernel BUG at fs/ext4/extents_status.c:202!
+invalid opcode: 0000 [#1] SMP KASAN PTI
+CPU: 1 PID: 1291 Comm: syz.3.17 Not tainted 5.15.0 #1
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
+RIP: 0010:__es_tree_search.isra.0+0x1c2/0x210
+Code: 89 df 44 89 ee e8 0e fb 9c ff 44 39 eb 77 1d 45 31 e4 e8 21 fa 9c ff 4c 89 e0 5b 5d 41 5c 41 5d 41 5e 41 5f c3 e8 0e fa 9c ff <0f> 0b e8 07 fa 9c ff 4c 89 e7 e8 5f 2b 8e 00 49 89 c4 eb d4 e8 f5
+RSP: 0018:ffff88800f3471f0 EFLAGS: 00010246
+RAX: 0000000000000000 RBX: 0000000000000001 RCX: ffff888010470000
+RDX: 0000000000000000 RSI: ffff888010470000 RDI: 0000000000000002
+RBP: 0000000000000001 R08: ffffffff819e5a82 R09: 0000000000000001
+R10: 0000000000000004 R11: ffffed1001e68e3a R12: ffff88800de13188
+R13: 0000000000000000 R14: dffffc0000000000 R15: 0000000000000001
+FS:  0000555556453500(0000) GS:ffff88806d100000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007fd03d71e7b0 CR3: 000000001042c000 CR4: 00000000000006e0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ ext4_es_cache_extent+0x217/0x3c0
+ ext4_cache_extents+0x238/0x2f0
+ ext4_find_extent+0x7ae/0xb10
+ ext4_ext_map_blocks+0x15e/0x3ea0
+ ext4_map_blocks+0x99e/0x1770
+ ext4_getblk+0x48f/0x6a0
+ ext4_bread+0x2a/0x1c0
+ ext4_quota_read+0x214/0x2e0
+ v2_read_header+0x79/0x110
+ v2_check_quota_file+0x73/0x180
+ dquot_load_quota_sb+0x510/0xef0
+ dquot_load_quota_inode+0x1ce/0x330
+ ext4_enable_quotas+0x48a/0x6d0
+ ext4_fill_super+0xcc68/0xceb0
+ mount_bdev+0x32c/0x3f0
+ legacy_get_tree+0xf3/0x200
+ vfs_get_tree+0x88/0x2e0
+ path_mount+0x693/0x1ba0
+ do_mount+0xf3/0x110
+ __x64_sys_mount+0x18f/0x230
+ do_syscall_64+0x3b/0x90
+ entry_SYSCALL_64_after_hwframe+0x44/0xae
+RIP: 0033:0x7fd03d772f2e
+Code: 48 c7 c0 ff ff ff ff eb aa e8 5e 20 00 00 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 40 00 f3 0f 1e fa 49 89 ca b8 a5 00 00 00 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 a8 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007fffba413da8 EFLAGS: 00000246 ORIG_RAX: 00000000000000a5
+RAX: ffffffffffffffda RBX: 0000000000000535 RCX: 00007fd03d772f2e
+RDX: 00002000000004c0 RSI: 0000200000000580 RDI: 00007fffba413e00
+RBP: 00007fffba413e40 R08: 00007fffba413e40 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 00002000000004c0
+R13: 0000200000000580 R14: 00007fffba413e00 R15: 00002000000005c0
+Modules linked in:
+---[ end trace d649beb0a876ad0c ]---
+RIP: 0010:__es_tree_search.isra.0+0x1c2/0x210
+Code: 89 df 44 89 ee e8 0e fb 9c ff 44 39 eb 77 1d 45 31 e4 e8 21 fa 9c ff 4c 89 e0 5b 5d 41 5c 41 5d 41 5e 41 5f c3 e8 0e fa 9c ff <0f> 0b e8 07 fa 9c ff 4c 89 e7 e8 5f 2b 8e 00 49 89 c4 eb d4 e8 f5
+RSP: 0018:ffff88800f3471f0 EFLAGS: 00010246
+RAX: 0000000000000000 RBX: 0000000000000001 RCX: ffff888010470000
+RDX: 0000000000000000 RSI: ffff888010470000 RDI: 0000000000000002
+RBP: 0000000000000001 R08: ffffffff819e5a82 R09: 0000000000000001
+R10: 0000000000000004 R11: ffffed1001e68e3a R12: ffff88800de13188
+R13: 0000000000000000 R14: dffffc0000000000 R15: 0000000000000001
+FS:  0000555556453500(0000) GS:ffff88806d100000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007fd03d71e7b0 CR3: 000000001042c000 CR4: 00000000000006e0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+syz-executor (836) used greatest stack depth: 25064 bytes left
+

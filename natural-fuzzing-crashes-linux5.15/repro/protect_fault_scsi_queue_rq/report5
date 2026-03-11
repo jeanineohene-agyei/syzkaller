@@ -1,0 +1,68 @@
+/dev/loop7: Can't open blockdev
+x_tables: duplicate underflow at hook 1
+nfs: Unknown parameter 'appraise_type'
+loop3: detected capacity change from 0 to 1024
+loop7: detected capacity change from 0 to 512
+general protection fault, probably for non-canonical address 0xdffffc0000000000: 0000 [#1] SMP KASAN PTI
+KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
+CPU: 1 PID: 55 Comm: kworker/1:1H Not tainted 5.15.0 #1
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.15.0-1 04/01/2014
+Workqueue: kblockd blk_mq_run_work_fn
+RIP: 0010:scsi_queue_rq+0x1ff0/0x2bb0
+Code: 00 fc ff df 48 c1 ea 03 80 3c 02 00 0f 85 ae 0b 00 00 48 8b 83 f0 01 00 00 48 ba 00 00 00 00 00 fc ff df 48 89 c1 48 c1 e9 03 <0f> b6 14 11 48 89 c1 83 e1 07 38 ca 7f 08 84 d2 0f 85 4e 0b 00 00
+RSP: 0018:ffff8880084cfab8 EFLAGS: 00010246
+RAX: 0000000000000000 RBX: ffff88800a429300 RCX: 0000000000000000
+RDX: dffffc0000000000 RSI: ffff888008478e80 RDI: 0000000000000002
+RBP: ffff88800a02c000 R08: ffffffff82c5a859 R09: 0000000000000000
+R10: 0000000000000003 R11: ffffed10014852a1 R12: 0000000000000000
+R13: 0000000000000000 R14: 0000000000000000 R15: ffff88800a234000
+FS:  0000000000000000(0000) GS:ffff88806d100000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007f605ed222a0 CR3: 0000000026fe6000 CR4: 00000000000006e0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ blk_mq_dispatch_rq_list+0x3e7/0x2050
+ __blk_mq_sched_dispatch_requests+0x29a/0x520
+ blk_mq_sched_dispatch_requests+0xfb/0x180
+ __blk_mq_run_hw_queue+0x7f/0x110
+ blk_mq_run_work_fn+0x55/0x70
+ process_one_work+0x8f7/0x12f0
+ worker_thread+0xa1/0x1130
+ kthread+0x378/0x450
+ ret_from_fork+0x22/0x30
+Modules linked in:
+---[ end trace 7fc82a45de2ce562 ]---
+RIP: 0010:scsi_queue_rq+0x1ff0/0x2bb0
+Code: 00 fc ff df 48 c1 ea 03 80 3c 02 00 0f 85 ae 0b 00 00 48 8b 83 f0 01 00 00 48 ba 00 00 00 00 00 fc ff df 48 89 c1 48 c1 e9 03 <0f> b6 14 11 48 89 c1 83 e1 07 38 ca 7f 08 84 d2 0f 85 4e 0b 00 00
+RSP: 0018:ffff8880084cfab8 EFLAGS: 00010246
+RAX: 0000000000000000 RBX: ffff88800a429300 RCX: 0000000000000000
+RDX: dffffc0000000000 RSI: ffff888008478e80 RDI: 0000000000000002
+RBP: ffff88800a02c000 R08: ffffffff82c5a859 R09: 0000000000000000
+R10: 0000000000000003 R11: ffffed10014852a1 R12: 0000000000000000
+R13: 0000000000000000 R14: 0000000000000000 R15: ffff88800a234000
+FS:  0000000000000000(0000) GS:ffff88806d100000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007f605ed222a0 CR3: 0000000004c10000 CR4: 00000000000006e0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+----------------
+Code disassembly (best guess), 4 bytes skipped:
+   0:	48 c1 ea 03          	shr    $0x3,%rdx
+   4:	80 3c 02 00          	cmpb   $0x0,(%rdx,%rax,1)
+   8:	0f 85 ae 0b 00 00    	jne    0xbbc
+   e:	48 8b 83 f0 01 00 00 	mov    0x1f0(%rbx),%rax
+  15:	48 ba 00 00 00 00 00 	movabs $0xdffffc0000000000,%rdx
+  1c:	fc ff df
+  1f:	48 89 c1             	mov    %rax,%rcx
+  22:	48 c1 e9 03          	shr    $0x3,%rcx
+* 26:	0f b6 14 11          	movzbl (%rcx,%rdx,1),%edx <-- trapping instruction
+  2a:	48 89 c1             	mov    %rax,%rcx
+  2d:	83 e1 07             	and    $0x7,%ecx
+  30:	38 ca                	cmp    %cl,%dl
+  32:	7f 08                	jg     0x3c
+  34:	84 d2                	test   %dl,%dl
+  36:	0f 85 4e 0b 00 00    	jne    0xb8a
+
+<<<<<<<<<<<<<<< tail report >>>>>>>>>>>>>>>
+
