@@ -23,9 +23,9 @@ discoverability across kernel versions and OS architectures.
 ### Added Files and Directories
 
 **Crash Programs and Fuzzing Results:**
-- [All Fuzzing Crashes on Linux 5.0]([fuzzing-crashes-linux5.0/](https://github.com/jeanineohene-agyei/syzkaller/tree/master/all-fuzzing-crashes-linux5.0)) — Results from fuzzing Linux 5.0, containing:
+- [All Fuzzing Crashes on Linux 5.0](https://github.com/jeanineohene-agyei/syzkaller/tree/master/all-fuzzing-crashes-linux5.0) — Results from fuzzing Linux 5.0, containing:
   - [Direct Reproduced Crashes Linux 5.0](https://github.com/jeanineohene-agyei/syzkaller/tree/master/all-fuzzing-crashes-linux5.0/direct-reproduced-crashes-linux5.0) — Kernel config and crash program for direct reproduction of `KASAN: use-after-free Read in screen_glyph_unicode`
-  - [Natural Fuzzing Crashes on Linux 5.0](https://github.com/jeanineohene-agyei/syzkaller/tree/master/all-fuzzing-crashes-linux5.0/natural-fuzzing-crashes-linux5.0) — Crash reports and logs from 22-hour syz-manager run, including the newly discovered `KASAN: slab-out-of-bounds Read in vcs_write`
+  - [Natural Fuzzing Crashes on Linux 5.0](https://github.com/jeanineohene-agyei/syzkaller/tree/master/all-fuzzing-crashes-linux5.0/natural-fuzzing-crashes-linux5.0) — Crash reports and logs from 22-hour syz-manager run
 
 - [Natural Fuzzing Crashes on Linux 5.15/](https://github.com/jeanineohene-agyei/syzkaller/tree/master/natural-fuzzing-crashes-linux5.15) — Results from fuzzing Linux 5.15, containing:
   - [Non-reproducible Bugs](https://github.com/jeanineohene-agyei/syzkaller/tree/master/natural-fuzzing-crashes-linux5.15/nonrepro) — Reports and logs for the three discovered bugs
