@@ -36,7 +36,7 @@ discoverability across kernel versions and OS architectures.
   - [Reproducible Bugs](https://github.com/jeanineohene-agyei/syzkaller/tree/master/natural-fuzzing-crashes-linux5.15/repro) — Reports, logs, and crash program for the two discovered bugs
 
 **Proposed Patch:**
-- [vcs_patch_tracer.c]([vcs_patch_tracer.c](https://github.com/jeanineohene-agyei/syzkaller/blob/master/vcs_patch_tracer.c)) — Modified `vcs_write` 
+- [vcs_patch_tracer.c](https://github.com/jeanineohene-agyei/syzkaller/blob/master/vcs_patch_tracer.c) — Modified `vcs_write` 
   function with a proposed race condition tracer (`WARN_ON` assertion) 
   and patch to revalidate the `org` pointer after console lock 
   reacquisition, addressing the `KASAN: slab-out-of-bounds Read in 
