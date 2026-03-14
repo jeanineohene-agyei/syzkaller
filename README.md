@@ -31,13 +31,12 @@ discoverability across kernel versions and OS architectures.
     syz-manager run, including the newly discovered 
     `KASAN: slab-out-of-bounds Read in vcs_write`
 
-- [`natural-fuzzing-crashes-linux5.15/`]([fuzzing-crashes-linux5.15/](https://github.com/jeanineohene-agyei/syzkaller/tree/master/natural-fuzzing-crashes-linux5.15)) — Results 
-  from fuzzing Linux 5.15, containing
-  - [`Non-reproducible Bgus`](https://github.com/jeanineohene-agyei/syzkaller/tree/master/natural-fuzzing-crashes-linux5.15/nonrepro) — Reports and logs for the three discovered bugs
-  - [`Reproducible Bugs`](https://github.com/jeanineohene-agyei/syzkaller/tree/master/natural-fuzzing-crashes-linux5.15/repro) — Reports, logs, and crash program for the two discovered bugs
+- [natural-fuzzing-crashes-linux5.15/](https://github.com/jeanineohene-agyei/syzkaller/tree/master/natural-fuzzing-crashes-linux5.15) — Results from fuzzing Linux 5.15, containing:
+  - [Non-reproducible Bugs](https://github.com/jeanineohene-agyei/syzkaller/tree/master/natural-fuzzing-crashes-linux5.15/nonrepro) — Reports and logs for the three discovered bugs
+  - [Reproducible Bugs](https://github.com/jeanineohene-agyei/syzkaller/tree/master/natural-fuzzing-crashes-linux5.15/repro) — Reports, logs, and crash program for the two discovered bugs
 
 **Proposed Patch:**
-- [`vcs_patch_tracer.c`]([vcs_patch_tracer.c](https://github.com/jeanineohene-agyei/syzkaller/blob/master/vcs_patch_tracer.c)) — Modified `vcs_write` 
+- [vcs_patch_tracer.c]([vcs_patch_tracer.c](https://github.com/jeanineohene-agyei/syzkaller/blob/master/vcs_patch_tracer.c)) — Modified `vcs_write` 
   function with a proposed race condition tracer (`WARN_ON` assertion) 
   and patch to revalidate the `org` pointer after console lock 
   reacquisition, addressing the `KASAN: slab-out-of-bounds Read in 
