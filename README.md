@@ -23,20 +23,16 @@ discoverability across kernel versions and OS architectures.
 ### Added Files and Directories
 
 **Crash Programs and Fuzzing Results:**
-- [`fuzzing-crashes-linux5.0/`](fuzzing-crashes-linux5.0/) — Results 
-  from fuzzing Linux 5.0, containing:
-  - `direct-repro/` — Kernel config and crash program for direct 
-    reproduction of `KASAN: use-after-free Read in screen_glyph_unicode`
-  - `natural-fuzzing/` — Crash reports and logs from 22-hour 
-    syz-manager run, including the newly discovered 
-    `KASAN: slab-out-of-bounds Read in vcs_write`
+- [All Fuzzing Crashes on Linux 5.0]([fuzzing-crashes-linux5.0/](https://github.com/jeanineohene-agyei/syzkaller/tree/master/all-fuzzing-crashes-linux5.0)) — Results from fuzzing Linux 5.0, containing:
+  - [Direct Reproduced Crashes Linux 5.0](https://github.com/jeanineohene-agyei/syzkaller/tree/master/all-fuzzing-crashes-linux5.0/direct-reproduced-crashes-linux5.0) — Kernel config and crash program for direct reproduction of `KASAN: use-after-free Read in screen_glyph_unicode`
+  - [Natural Fuzzing Crashes on Linux 5.0](https://github.com/jeanineohene-agyei/syzkaller/tree/master/all-fuzzing-crashes-linux5.0/natural-fuzzing-crashes-linux5.0) — Crash reports and logs from 22-hour syz-manager run, including the newly discovered `KASAN: slab-out-of-bounds Read in vcs_write`
 
-- [natural-fuzzing-crashes-linux5.15/](https://github.com/jeanineohene-agyei/syzkaller/tree/master/natural-fuzzing-crashes-linux5.15) — Results from fuzzing Linux 5.15, containing:
+- [Natural Fuzzing Crashes on Linux 5.15/](https://github.com/jeanineohene-agyei/syzkaller/tree/master/natural-fuzzing-crashes-linux5.15) — Results from fuzzing Linux 5.15, containing:
   - [Non-reproducible Bugs](https://github.com/jeanineohene-agyei/syzkaller/tree/master/natural-fuzzing-crashes-linux5.15/nonrepro) — Reports and logs for the three discovered bugs
   - [Reproducible Bugs](https://github.com/jeanineohene-agyei/syzkaller/tree/master/natural-fuzzing-crashes-linux5.15/repro) — Reports, logs, and crash program for the two discovered bugs
 
 **Proposed Patch:**
-- [vcs_patch_tracer.c](https://github.com/jeanineohene-agyei/syzkaller/blob/master/vcs_patch_tracer.c) — Modified `vcs_write` 
+- [vcs_write High-Level Patch and Race Condition Tracer](https://github.com/jeanineohene-agyei/syzkaller/tree/master/slab-patch-tracer) — Modified `vcs_write` 
   function with a proposed race condition tracer (`WARN_ON` assertion) 
   and patch to revalidate the `org` pointer after console lock 
   reacquisition, addressing the `KASAN: slab-out-of-bounds Read in 
