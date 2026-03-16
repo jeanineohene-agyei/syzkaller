@@ -843,31 +843,41 @@ private:
 
 	void ExecuteBinary(rpc::ExecRequestRawT& msg)
 	{
-		rpc::ExecutingMessageRawT exec;
-		exec.id = msg.id;
-		rpc::ExecutorMessageRawT raw;
-		raw.msg.Set(std::move(exec));
-		conn_.Send(raw);
+		#if GOOS_fuchsia
+			rpc::ExecResultRawT res;
+			res.id = msg.id;
+			res.error = "binary execution not supported on Fuchsia";
+			rpc::ExecutorMessageRawT raw;
+			raw.msg.Set(std::move(res));
+			conn_.Send(raw);
+			return;
+		#else
+			rpc::ExecutingMessageRawT exec;
+			exec.id = msg.id;
+			rpc::ExecutorMessageRawT raw;
+			raw.msg.Set(std::move(exec));
+			conn_.Send(raw);
 
-		char dir_template[] = "syz-bin-dirXXXXXX";
-		char* dir = mkdtemp(dir_template);
-		if (dir == nullptr)
-			fail("mkdtemp failed");
-		if (chmod(dir, 0777))
-			fail("chmod failed");
-		auto [err, output] = ExecuteBinaryImpl(msg, dir);
-		if (!err.empty()) {
-			char tmp[64];
-			snprintf(tmp, sizeof(tmp), " (errno %d: %s)", errno, strerror(errno));
-			err += tmp;
-		}
-		remove_dir(dir);
-		rpc::ExecResultRawT res;
-		res.id = msg.id;
-		res.error = std::move(err);
-		res.output = std::move(output);
-		raw.msg.Set(std::move(res));
-		conn_.Send(raw);
+			char dir_template[] = "syz-bin-dirXXXXXX";
+			char* dir = mkdtemp(dir_template);
+			if (dir == nullptr)
+				fail("mkdtemp failed");
+			if (chmod(dir, 0777))
+				fail("chmod failed");
+			auto [err, output] = ExecuteBinaryImpl(msg, dir);
+			if (!err.empty()) {
+				char tmp[64];
+				snprintf(tmp, sizeof(tmp), " (errno %d: %s)", errno, strerror(errno));
+				err += tmp;
+			}
+			remove_dir(dir);
+			rpc::ExecResultRawT res;
+			res.id = msg.id;
+			res.error = std::move(err);
+			res.output = std::move(output);
+			raw.msg.Set(std::move(res));
+			conn_.Send(raw);
+		#endif
 	}
 
 	std::tuple<std::string, std::vector<uint8_t>> ExecuteBinaryImpl(rpc::ExecRequestRawT& msg, const char* dir)
