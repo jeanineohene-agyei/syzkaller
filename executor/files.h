@@ -117,3 +117,11 @@ static std::vector<std::unique_ptr<rpc::FileInfoRawT>> ReadFiles(const std::vect
 	}
 	return results;
 }
+
+#ifndef GLOB_ALTDIRFUNC
+static void remove_dir(const char* dir)
+{
+        // Simple fallback: just try rmdir
+        rmdir(dir);
+}
+#endif
