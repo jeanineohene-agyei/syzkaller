@@ -988,12 +988,14 @@ static void runner(char** argv, int argc)
 	// This is not a bullet-proof protection, but it won't harm either.
 	for (int sig = 0; sig <= 64; sig++)
 		signal(sig, SIG_IGN);
-	if (signal(SIGINT, SigintHandler) == SIG_ERR)
-		fail("signal(SIGINT) failed");
-	if (signal(SIGTERM, SigintHandler) == SIG_ERR)
-		fail("signal(SIGTERM) failed");
-	if (signal(SIGCHLD, SigchldHandler) == SIG_ERR)
-		fail("signal(SIGCHLD) failed");
+	if !GOOS_fuchsia
+		if (signal(SIGINT, SigintHandler) == SIG_ERR)
+			fail("signal(SIGINT) failed");
+		if (signal(SIGTERM, SigintHandler) == SIG_ERR)
+			fail("signal(SIGTERM) failed");
+		if (signal(SIGCHLD, SigchldHandler) == SIG_ERR)
+			fail("signal(SIGCHLD) failed");
+	#endif
 	struct sigaction act = {};
 	act.sa_flags = SA_SIGINFO;
 	act.sa_sigaction = FatalHandler;
