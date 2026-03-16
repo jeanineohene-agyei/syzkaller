@@ -1,6 +1,79 @@
 // Copyright 2024 syzkaller project authors. All rights reserved.
 // Use of this source code is governed by Apache 2 LICENSE that can be found in the LICENSE file.
 
+#if GOOS_fuchsia
+#include <lib/fdio/spawn.h>
+#include <zircon/process.h>
+#include <zircon/syscalls.h>
+#include <zircon/syscalls/object.h>
+#include <vector>
+#include <string>
+
+class Subprocess
+{
+public:
+    Subprocess(const char** argv, const std::vector<std::pair<int, int>>& fds)
+    {
+        std::string bin_path;
+        if (argv[0][0] != '/') {
+            bin_path = std::string("/boot/bin/") + argv[0];
+        } else {
+            bin_path = argv[0];
+        }
+
+        std::vector<fdio_spawn_action_t> actions;
+        for (auto pair : fds) {
+            if (pair.first != -1) {
+                fdio_spawn_action_t action = {};
+                action.action = FDIO_SPAWN_ACTION_CLONE_FD;
+                action.fd.local_fd = pair.first;
+                action.fd.target_fd = pair.second;
+                actions.push_back(action);
+            }
+        }
+
+        char err_msg[FDIO_SPAWN_ERR_MSG_MAX_LENGTH];
+        uint32_t flags = FDIO_SPAWN_CLONE_ALL & ~FDIO_SPAWN_CLONE_STDIO;
+        zx_status_t status = fdio_spawn_etc(
+            ZX_HANDLE_INVALID, flags, bin_path.c_str(), argv, nullptr,
+            actions.size(), actions.data(), &process_, err_msg);
+        if (status != ZX_OK)
+            failmsg("fdio_spawn failed", "binary=%s status=%d msg=%s", bin_path.c_str(), status, err_msg);
+    }
+
+    ~Subprocess() { if (process_ != ZX_HANDLE_INVALID) KillAndWait(); }
+
+    int KillAndWait() {
+        zx_task_kill(process_);
+        zx_signals_t signals;
+        zx_object_wait_one(process_, ZX_PROCESS_TERMINATED, ZX_TIME_INFINITE, &signals);
+        zx_info_process_t info;
+        zx_object_get_info(process_, ZX_INFO_PROCESS, &info, sizeof(info), nullptr, nullptr);
+        zx_handle_close(process_);
+        process_ = ZX_HANDLE_INVALID;
+        return info.return_code;
+    }
+
+    int WaitAndKill(uint64 timeout_ms) {
+        zx_time_t deadline = zx_deadline_after(ZX_MSEC(timeout_ms));
+        zx_signals_t signals;
+        zx_status_t status = zx_object_wait_one(process_, ZX_PROCESS_TERMINATED, deadline, &signals);
+        if (status == ZX_ERR_TIMED_OUT)
+            zx_task_kill(process_);
+        zx_object_wait_one(process_, ZX_PROCESS_TERMINATED, ZX_TIME_INFINITE, &signals);
+        zx_info_process_t info;
+        zx_object_get_info(process_, ZX_INFO_PROCESS, &info, sizeof(info), nullptr, nullptr);
+        zx_handle_close(process_);
+        process_ = ZX_HANDLE_INVALID;
+        return info.return_code;
+    }
+
+private:
+    zx_handle_t process_ = ZX_HANDLE_INVALID;
+    Subprocess(const Subprocess&) = delete;
+    Subprocess& operator=(const Subprocess&) = delete;
+};
+#else
 #include <spawn.h>
 #include <sys/wait.h>
 #include <unistd.h>
@@ -136,3 +209,4 @@ private:
 	Subprocess(const Subprocess&) = delete;
 	Subprocess& operator=(const Subprocess&) = delete;
 };
+#endif
