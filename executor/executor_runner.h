@@ -975,10 +975,12 @@ static void runner(char** argv, int argc)
 	const char* const manager_addr = argv[3];
 	const char* const manager_port = argv[4];
 
-	struct rlimit rlim;
-	rlim.rlim_cur = rlim.rlim_max = kFdLimit;
-	if (setrlimit(RLIMIT_NOFILE, &rlim))
-		fail("setrlimit(RLIMIT_NOFILE) failed");
+	#if !GOOS_fuchsia
+		struct rlimit rlim;
+		rlim.rlim_cur = rlim.rlim_max = kFdLimit;
+		if (setrlimit(RLIMIT_NOFILE, &rlim))
+			fail("setrlimit(RLIMIT_NOFILE) failed");
+	#endif
 
 	// Ignore all signals we are not interested in.
 	// In particular we want to ignore SIGPIPE, but also everything else since
