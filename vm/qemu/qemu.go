@@ -248,7 +248,7 @@ var archConfigs = map[string]*archConfig{
 		Qemu:      "qemu-system-x86_64",
 		QemuArgs:  "-enable-kvm -machine q35 -cpu host,migratable=off",
 		TargetDir: "/tmp",
-		NetDev:    "e1000",
+		NetDev:    "virtio-net-pci",
 		RngDev:    "virtio-rng-pci",
 		CmdLine: []string{
 			"kernel.serial=legacy",
