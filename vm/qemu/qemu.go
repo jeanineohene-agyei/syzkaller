@@ -241,7 +241,7 @@ var archConfigs = map[string]*archConfig{
 	"netbsd/amd64": {
 		Qemu:     "qemu-system-x86_64",
 		QemuArgs: "-enable-kvm",
-		NetDev:   "e1000",
+		NetDev:   "virtio-net-pci",
 		RngDev:   "virtio-rng-pci",
 	},
 	"fuchsia/amd64": {
