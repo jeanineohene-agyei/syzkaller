@@ -5,7 +5,9 @@
 #include <fcntl.h>
 #include <signal.h>
 #include <sys/mman.h>
+#if !GOOS_fuchsia
 #include <sys/resource.h>
+#endif
 #include <unistd.h>
 
 #include <algorithm>
