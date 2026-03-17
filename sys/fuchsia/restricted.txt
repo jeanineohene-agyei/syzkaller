@@ -1,0 +1,6 @@
+include <zircon/syscalls.h>
+
+zx_restricted_enter(options int32, vector_table_ptr ptr[in, int64], context ptr[in, int64])
+zx_restricted_bind_state(options int32, out ptr[out, zx_vmo])
+zx_restricted_unbind_state(options int32)
+zx_restricted_kick(thread zx_thread, options int32)

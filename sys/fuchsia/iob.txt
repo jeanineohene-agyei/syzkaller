@@ -1,0 +1,6 @@
+include <zircon/syscalls.h>
+
+zx_iob_create(options int64, regions ptr[in, array[int8]], out ptr[out, zx_handle, zx_handle])
+zx_iob_allocate_id(handle zx_iob, options int32, region_index int32, blob ptr[in, array[int8]], id ptr[out, int32])
+zx_iob_writeev(handle zx_iob, options int32, region_index int32, vectors ptr[in, array[iovec]])
+zx_iob_create_shared_region(options int64, size int64, out ptr[out, zx_handle])

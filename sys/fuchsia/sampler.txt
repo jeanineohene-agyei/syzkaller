@@ -1,0 +1,13 @@
+include <zircon/syscalls.h>
+
+zx_sampler_create(rsrc zx_resource, options int64, config ptr[in, array[zx_sampler_config]], per_cpu_buffers ptr[out, zx_handle])
+zx_sampler_start(iobuffer zx_handle)
+zx_sampler_stop(iobuffer zx_handle)
+zx_sampler_read(iobuffer zx_handle, data ptr[out, array[int8]], offset int64, buffer_size int32, actual ptr[out, int32])
+
+zx_sampler_config {
+    period ptr[in, int64, int32]
+    buffer_size int32
+    discipline int64
+}
+

@@ -1,0 +1,6 @@
+include <zircon/syscalls.h>
+
+zx_counter_create(options int32, out ptr[out, zx_handle])
+zx_counter_add(handle zx_handle, value int64)
+zx_counter_read(handle zx_handle, out ptr[out, int64])
+zx_counter_write(handle zx_handle, value int64)
