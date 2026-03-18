@@ -30,6 +30,8 @@ discoverability across kernel versions and OS architectures.
 - [Natural Fuzzing Crashes on Linux 5.15/](https://github.com/jeanineohene-agyei/syzkaller/tree/master/natural-fuzzing-crashes-linux5.15) — Results from fuzzing Linux 5.15, containing:
   - [Non-reproducible Bugs](https://github.com/jeanineohene-agyei/syzkaller/tree/master/natural-fuzzing-crashes-linux5.15/nonrepro) — Reports and logs for the three discovered bugs
   - [Reproducible Bugs](https://github.com/jeanineohene-agyei/syzkaller/tree/master/natural-fuzzing-crashes-linux5.15/repro) — Reports, logs, and crash program for the two discovered bugs
+ 
+- [Natural Fuzzing crashes on FreeBSD 15.0 RELEASE](https://github.com/jeanineohene-agyei/syzkaller/tree/master/All-fuzzing-crashes-freebsd-15.0) - Results from fuzzing freeBSD-15.0
 
 **Proposed Patch:**
 - [vcs_write High-Level Patch and Race Condition Tracer](https://github.com/jeanineohene-agyei/syzkaller/tree/master/slab-patch-tracer) — Modified `vcs_write` 
