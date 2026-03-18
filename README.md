@@ -44,7 +44,7 @@ discoverability across kernel versions and OS architectures.
   - `/vm/qemu/qemu.go`
     - Updated network driver option
   - `/executor/executor_runner.h`
-    - Placed Fuchsia-specific guards around unsupported POSIX-specific headers, structs, and signals
+    - Placed Fuchsia-specific guards around unsupported POSIX headers, structs, and signals
   - `/executor/files.h`
     - Placed fall-back stub for `remove_dir()` function
   - `/executor/subprocess.h`
