@@ -1,5 +1,0 @@
-#{"procs":1,"slowdown":1,"sandbox":"","sandbox_arg":0,"close_fds":false,"segv":true,"callcomments":true}
-r0 = openat$crypto(0xffffffffffffff9c, &(0x7f0000000040), 0x200, 0x0)
-freebsd11_fstatfs(r0, &(0x7f0000000080))
-mprotect(&(0x7f0000000000/0x4000)=nil, 0x4000, 0x1)
-unmount(&(0x7f0000000200)='./file1\x00', 0xc40006c8)
