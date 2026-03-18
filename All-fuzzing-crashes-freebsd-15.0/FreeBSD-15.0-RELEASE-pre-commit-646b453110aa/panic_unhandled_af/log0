@@ -1,0 +1,949 @@
+executing program
+executing program
+panic: unhandled af 25
+cpuid = 0
+time = 1744262659
+KDB: stack backtrace:
+db_trace_self_wrapper() at db_trace_self_wrapper+0xc6/frame 0xfffffe0057509010
+kdb_backtrace() at kdb_backtrace+0xd0/frame 0xfffffe0057509170
+vpanic() at vpanic+0x257/frame 0xfffffe0057509330
+panic() at panic+0xb5/frame 0xfffffe00575093f0
+unhandled_af() at unhandled_af+0x1d/frame 0xfffffe0057509410
+pfr_dynaddr_update() at pfr_dynaddr_update+0x1aa/frame 0xfffffe00575094d0
+pfi_kkif_update() at pfi_kkif_update+0x15a/frame 0xfffffe00575095b0
+pfi_dynaddr_setup() at pfi_dynaddr_setup+0x4cf/frame 0xfffffe00575096f0
+pf_ioctl_add_addr() at pf_ioctl_add_addr+0x27c/frame 0xfffffe0057509750
+pfioctl() at pfioctl+0x2ea2/frame 0xfffffe005750b730
+devfs_ioctl() at devfs_ioctl+0x266/frame 0xfffffe005750b820
+VOP_IOCTL_APV() at VOP_IOCTL_APV+0x9b/frame 0xfffffe005750b850
+vn_ioctl() at vn_ioctl+0x3c7/frame 0xfffffe005750ba60
+devfs_ioctl_f() at devfs_ioctl_f+0x69/frame 0xfffffe005750bab0
+kern_ioctl() at kern_ioctl+0x4ca/frame 0xfffffe005750bb90
+sys_ioctl() at sys_ioctl+0x36e/frame 0xfffffe005750bd10
+amd64_syscall() at amd64_syscall+0x4af/frame 0xfffffe005750bf30
+fast_syscall_common() at fast_syscall_common+0xf8/frame 0xfffffe005750bf30
+--- syscall (0, FreeBSD ELF64, syscall), rip = 0x23419a, rsp = 0x821292fe8, rbp = 0x821293040 ---
+KDB: enter: panic
+[ thread pid 776 tid 100111 ]
+Stopped at      kdb_enter+0x6e: movq    $0,0x23e9997(%rip)
+db> 
+db> set $lines = 0
+db> set $maxwidth = 0
+db> show registers
+cs                        0x20
+ds                        0x3b
+es                        0x3b
+fs                        0x13
+gs                        0x1b
+ss                        0x28
+rax                       0x12
+rcx         0xfffffe00033eee30
+rdx         0xdffff7c000000000
+rbx         0xffffffff82755d80  .str.27
+rsp         0xfffffe0057509150
+rbp         0xfffffe0057509170
+rsi                          0
+rdi         0xffffffff82e004c0  panicstr
+r8                           0
+r9                  0xffffffff
+r10                          0
+r11                       0x13
+r12         0xfffffe00548a0000
+r13         0xfffffffffffffffe
+r14         0xffffffff82755d80  .str.27
+r15                          0
+rip         0xffffffff815c66fe  kdb_enter+0x6e
+rflags                    0x46
+kdb_enter+0x6e: movq    $0,0x23e9997(%rip)
+db> show proc
+Process 776 (syz-executor2153550) at 0xfffffe0054906000:
+ state: NORMAL
+ uid: 0  gids: 0, 0, 5
+ parent: pid 774 at 0xfffffe0008024000
+ ABI: FreeBSD ELF64
+ flag: 0x10000000  flag2: 0
+ arguments: ./syz-executor2153550691
+ reaper: 0xfffffe0008007040 reapsubtree: 1
+ sigparent: 20
+ vmspace: 0xfffffe000800f920
+   (map 0xfffffe000800f920)
+   (map.pmap 0xfffffe000800f9c0)
+   (pmap 0xfffffe000800fa30)
+ threads: 1
+100111                   Run     CPU 0                       syz-executor2153550
+db> ps
+  pid  ppid  pgrp   uid  state   wmesg   wchan               cmd
+  776   774   772     0  R       CPU 0                       syz-executor2153550
+  774   772   772     0  S       nanslp  0xffffffff83991401  syz-executor2153550
+  772   770   772     0  Ss      pause   0xfffffe0054804bb0  csh
+  770   682   770     0  Ss      select  0xfffffe0059ee2f40  sshd
+  748     1   748     0  Ss+     ttyin   0xfffffe00585f58b0  getty
+  747     1   747     0  Ss+     ttyin   0xfffffe0059c9e4b0  getty
+  746     1   746     0  Ss+     ttyin   0xfffffe0058a900b0  getty
+  745     1   745     0  Ss+     ttyin   0xfffffe0059c9ecb0  getty
+  744     1   744     0  Ss+     ttyin   0xfffffe00547720b0  getty
+  743     1   743     0  Ss+     ttyin   0xfffffe00547728b0  getty
+  742     1   742     0  Ss+     ttyin   0xfffffe00547730b0  getty
+  741     1   741     0  Ss+     ttyin   0xfffffe00547738b0  getty
+  740     1   740     0  Ss+     ttyin   0xfffffe00547740b0  getty
+  686     1   686     0  Ss      nanslp  0xffffffff83991401  cron
+  682     1   682     0  Ss      select  0xfffffe0059ee2b40  sshd
+  495     1   495     0  Ss      select  0xfffffe0007e4fcc0  syslogd
+  424     1   424     0  Ss      select  0xfffffe0007e4fdc0  devd
+  423     1   423    65  Ss      select  0xfffffe0007e4fd40  dhclient
+  338     1   338     0  Ss      select  0xfffffe0059ee31c0  dhclient
+  335     1   335     0  Ss      select  0xfffffe0059ee3140  dhclient
+   17     0     0     0  DL      syncer  0xffffffff83aaeca0  [syncer]
+   16     0     0     0  DL      vlruwt  0xfffffe0008026040  [vnlru]
+   15     0     0     0  DL      (threaded)                  [bufdaemon]
+100080                   D       psleep  0xffffffff83aad260  [bufdaemon]
+100083                   D       -       0xffffffff82e02140  [bufspacedaemon-0]
+100096                   D       sdflush 0xfffffe0007ffa8e8  [/ worker]
+    9     0     0     0  DL      psleep  0xffffffff83af81c0  [vmdaemon]
+    8     0     0     0  DL      (threaded)                  [pagedaemon]
+100078                   D       psleep  0xffffffff83ade138  [dom0]
+100081                   D       launds  0xffffffff83ade144  [laundry: dom0]
+100082                   D       umarcl  0xffffffff81d8ce10  [uma]
+    7     0     0     0  DL      -       0xffffffff8370ebd0  [rand_harvestq]
+    6     0     0     0  DL      pftm    0xffffffff841b15f0  [pf purge]
+    5     0     0     0  DL      waiting 0xffffffff844a9580  [sctp_iterator]
+    4     0     0     0  DL      (threaded)                  [cam]
+100046                   D       -       0xffffffff836d9340  [doneq0]
+100047                   D       -       0xffffffff836d92c0  [async]
+100076                   D       -       0xffffffff836d9140  [scanner]
+    3     0     0     0  DL      (threaded)                  [crypto]
+100043                   D       crypto_ 0xffffffff83ad9960  [crypto]
+100044                   D       crypto_ 0xfffffe000827eb30  [crypto returns 0]
+100045                   D       crypto_ 0xfffffe000827eb80  [crypto returns 1]
+   14     0     0     0  DL      seqstat 0xfffffe00547f2088  [sequencer 00]
+   13     0     0     0  DL      (threaded)                  [geom]
+100037                   D       -       0xffffffff83939de0  [g_event]
+100038                   D       -       0xffffffff83939e00  [g_up]
+100039                   D       -       0xffffffff83939e20  [g_down]
+    2     0     0     0  WL      (threaded)                  [clock]
+100031                   I                                   [clock (0)]
+100032                   I                                   [clock (1)]
+   12     0     0     0  WL      (threaded)                  [intr]
+100013                   I                                   [swi6: task queue]
+100014                   I                                   [swi6: Giant taskq]
+100016                   I                                   [swi5: fast taskq]
+100033                   I                                   [swi1: netisr 0]
+100034                   I                                   [swi1: hpts]
+100035                   I                                   [swi1: hpts]
+100048                   I                                   [irq24: virtio_pci0]
+100049                   I                                   [irq25: virtio_pci0]
+100050                   I                                   [irq26: virtio_pci0]
+100051                   I                                   [irq27: virtio_pci0]
+100052                   I                                   [irq28: virtio_pci1]
+100053                   I                                   [irq29: virtio_pci1]
+100054                   I                                   [irq30: virtio_pci1]
+100055                   I                                   [irq31: virtio_pci1]
+100056                   I                                   [irq32: virtio_pci1]
+100061                   I                                   [irq10: virtio_pci2]
+100063                   I                                   [irq1: atkbd0]
+100064                   I                                   [irq12: psm0]
+100065                   I                                   [swi0: uart uart++]
+100069                   I                                   [swi1: pf send]
+   11     0     0     0  RL      (threaded)                  [idle]
+100003                   CanRun                              [idle: cpu0]
+100004                   Run     CPU 1                       [idle: cpu1]
+    1     0     1     0  SLs     wait    0xfffffe0008007040  [init]
+   10     0     0     0  DL      audit_w 0xffffffff83ada400  [audit]
+    0     0     0     0  DLs     (threaded)                  [kernel]
+100000                   D       parked  0xffffffff84a13ff0  [swapper]
+100005                   D       -       0xfffffe0008bf3a00  [softirq_0]
+100006                   D       -       0xfffffe0008bf3800  [softirq_1]
+100007                   D       -       0xfffffe0008bf3600  [if_io_tqg_0]
+100008                   D       -       0xfffffe0008bf3400  [if_io_tqg_1]
+100009                   D       -       0xfffffe0008bf3200  [if_config_tqg_0]
+100010                   D       -       0xfffffe0008bf3000  [kqueue_ctx taskq]
+100011                   D       -       0xfffffe0008bf2d00  [jail_remove taskq]
+100012                   D       -       0xfffffe0008bf2b00  [bus taskq]
+100015                   D       -       0xfffffe0008bf2500  [thread taskq]
+100017                   D       -       0xfffffe0008bf2100  [aiod_kick taskq]
+100018                   D       -       0xfffffe0008bf1e00  [deferred_unmount ta]
+100019                   D       -       0xfffffe0008bf1c00  [inm_free taskq]
+100020                   D       -       0xfffffe0008bf1a00  [in6m_free taskq]
+100021                   D       -       0xfffffe0008bf1800  [linuxkpi_irq_wq]
+100022                   D       -       0xfffffe0008bf1600  [linuxkpi_short_wq_0]
+100023                   D       -       0xfffffe0008bf1600  [linuxkpi_short_wq_1]
+100024                   D       -       0xfffffe0008bf1600  [linuxkpi_short_wq_2]
+100025                   D       -       0xfffffe0008bf1600  [linuxkpi_short_wq_3]
+100026                   D       -       0xfffffe0008bf1100  [linuxkpi_long_wq_0]
+100027                   D       -       0xfffffe0008bf1100  [linuxkpi_long_wq_1]
+100028                   D       -       0xfffffe0008bf1100  [linuxkpi_long_wq_2]
+100029                   D       -       0xfffffe0008bf1100  [linuxkpi_long_wq_3]
+100036                   D       -       0xfffffe0008bf0500  [firmware taskq]
+100041                   D       -       0xfffffe0058559300  [crypto_0]
+100042                   D       -       0xfffffe0058559300  [crypto_1]
+100057                   D       -       0xfffffe0058558600  [vtnet0 rxq 0]
+100058                   D       -       0xfffffe0058558500  [vtnet0 txq 0]
+100059                   D       -       0xfffffe0058558400  [vtnet0 rxq 1]
+100060                   D       -       0xfffffe0058558300  [vtnet0 txq 1]
+100062                   D       vtbslp  0xfffffe0058582b80  [virtio_balloon]
+100066                   D       -       0xffffffff8275b021  [deadlkres]
+100070                   D       -       0xfffffe0058cf4500  [acpi_task_0]
+100071                   D       -       0xfffffe0058cf4500  [acpi_task_1]
+100072                   D       -       0xfffffe0058cf4500  [acpi_task_2]
+100074                   D       -       0xfffffe0008bf4100  [mca taskq]
+100075                   D       -       0xfffffe0058558d00  [CAM taskq]
+100077                   D       -       0xfffffe0058cf3c00  [ipsec_offload]
+db> show all locks
+Process 776 (syz-executor2153550) thread 0xfffffe00548a0000 (100111)
+exclusive rm pf rulesets (pf rulesets) r = 0 (0xfffffe00082408d0) locked @ /syzkaller/managers/main/kernel/sys/netpfil/pf/pf_ioctl.c:2597
+db> show malloc
+              Type        InUse        MemUse     Requests
+           pf_hash            6        12804K            6
+            linker          376         5023K          486
+          tcp_hpts            7         4801K            7
+            devbuf         4188         4324K         4216
+         sysctloid        34737         2046K        34812
+             vtbuf           24         1968K           46
+            newblk         1920         1504K         2004
+              kobj          330         1320K          494
+          vfscache            3         1025K            3
+               pcb           23          669K           42
+          inodedep            4          514K           71
+         ufs_quota            1          512K            1
+          vfs_hash            1          512K            1
+           callout            2          512K            2
+              intr            4          472K            4
+         vnet_data            2          224K            2
+          acpitask            1          224K            1
+            KTRACE          100          200K          100
+            acpica         1674          184K        54408
+           subproc          105          178K          844
+              vmem            5          144K            6
+           tidhash            3          141K            3
+           pagedep            2          129K           18
+        tfo_ccache            1          128K            1
+          IP reass            1          128K            1
+               sem            4          106K            4
+            DEVFS1          105          105K          114
+        gtaskqueue           18           98K           18
+               bus          994           81K         5040
+          mtx_pool            3           74K            3
+          syncache            1           68K            1
+     NFSD srvcache            3           68K            3
+            module          520           65K          520
+       ddb_capture            1           64K            1
+              temp           19           39K         1583
+         hostcache            1           32K            1
+               shm            1           32K            1
+            DEVFS3          124           31K          134
+           kdtrace          149           31K          889
+               msg            4           30K            4
+              umtx          240           30K          240
+            kbdmux            6           28K            6
+        DEVFS_RULE           56           20K           56
+               BPF           10           18K           10
+         ufs_mount            4           17K            5
+              proc            3           17K            3
+               tty           16           16K           16
+           ithread           90           15K           90
+            bus-sc           34           15K         1637
+      eventhandler          163           14K          163
+          routetbl           58           14K          200
+              kenv           95           12K           95
+            ifaddr           30           12K           32
+              GEOM           61           11K          477
+         CAM queue            5           11K         1528
+              rman           82           10K          437
+               rpc            8            9K            8
+         bmsafemap            3            9K           40
+           devstat            4            9K            4
+              UART           12            9K           12
+              ksem            1            8K            1
+             shmfd            1            8K            1
+       pfs_vncache            1            8K            1
+     audit_evclass          239            8K          301
+         taskqueue           69            8K           69
+            sglist            6            7K            6
+            plimit           16            6K          323
+           CAM DEV            3            6K          510
+              cred           22            6K          274
+         pfs_nodes           22            6K           22
+       ufs_dirhash           24            5K           24
+               UMA          265            5K          265
+             ifnet            3            5K            3
+                vt           11            5K           11
+          pf_table            2            4K            6
+           memdesc            1            4K            1
+               MCA           32            4K           32
+          filedesc            1            4K            1
+             evdev            4            4K            4
+          pf_ifnet            8            4K           10
+           acpisem           28            4K           28
+       ether_multi           40            4K           50
+           lltable           11            4K           11
+         in6_multi           25            3K           25
+          terminal           11            3K           11
+           acpidev           20            3K           20
+           session           19            3K           31
+            kqueue           38            3K          779
+           pwddesc           38            3K          777
+             hhook            8            3K           10
+             clone            9            3K            9
+           uidinfo            3            3K            8
+        local_apic            1            2K            1
+           io_apic            1            2K            1
+         ipsec-saq            2            2K            2
+          ioctlops            1            2K           92
+         proc-args           57            2K         1705
+             selfd           27            2K        29422
+            Unitno           28            2K           42
+           CAM XPT           22            2K          543
+             lockf           15            2K           22
+         toponodes            6            2K            6
+       ipsecpolicy            2            2K            2
+               msi            9            2K            9
+           netlink            2            2K           49
+           softdep            1            1K            1
+            sahead            1            1K            1
+          secasvar            1            1K            1
+       vnodemarker            2            1K           18
+      NFSD session            1            1K            1
+            select            7            1K           29
+        CAM periph            4            1K          271
+             ipsec            3            1K            3
+          indirdep            3            1K            3
+             nhops            6            1K            6
+              pfil            6            1K            6
+            isadev            6            1K            6
+             mount           16            1K           89
+          pci_link           10            1K           10
+          sctp_ifa            5            1K            6
+            crypto            4            1K            4
+            ip6ndp            4            1K            5
+ encap_export_host           12            1K           12
+               osd            9            1K           25
+            CC Mem            4            1K            9
+          in_multi            2            1K            4
+              cdev            2            1K            2
+       lkpikmalloc            8            1K            9
+            diradd            3            1K           36
+    chacha20random            1            1K            1
+            biobuf            1            1K            1
+       inpcbpolicy           11            1K          141
+          sctp_ifn            2            1K            6
+               mld            2            1K            2
+              igmp            2            1K            2
+            vnodes            1            1K            1
+      NFSD lckfile            1            1K            1
+     NFSD V4client            1            1K            1
+            DEVFSP            4            1K            9
+             DEVFS            9            1K           10
+           CAM SIM            2            1K            2
+            feeder            7            1K            7
+           tcpfunc            3            1K            3
+        loginclass            3            1K            7
+            prison            6            1K            6
+         cryptodev            2            1K           49
+           pf_rule            1            1K            2
+          nexusdev            8            1K            8
+            apmdev            1            1K            1
+          atkbddev            2            1K            2
+          procdesc            1            1K            6
+          pmchooks            1            1K            1
+          CAM path            4            1K         1034
+     CAM dev queue            2            1K            2
+ CAM I/O Scheduler            1            1K            1
+            soname            4            1K         3332
+          sctp_vrf            1            1K            1
+              vnet            1            1K            1
+               pmc            1            1K            1
+           entropy            2            1K           35
+          acpiintr            1            1K            1
+              cpus            2            1K            2
+    vnet_data_free            1            1K            1
+           Per-cpu            1            1K            1
+          freework            1            1K           26
+          p1003.1b            1            1K            1
+          filecaps            1            1K           66
+            mqdata            0            0K            0
+            ipcomp            0            0K            0
+               esp            0            0K            0
+                ah            0            0K            0
+      tcp_pcm_rack            0            0K            0
+       tcp_do_rack            0            0K            0
+      tcp_fsb_rack            0            0K            0
+        sctp_mcore            0            0K            0
+        sctp_socko            0            0K            0
+         sctp_iter            0            0K            4
+         sctp_mvrf            0            0K            0
+         sctp_timw            0            0K            0
+         sctp_cpal            0            0K            0
+         sctp_cmsg            0            0K            0
+         sctp_stre            0            0K            0
+         sctp_athi            0            0K            0
+         sctp_athm            0            0K            0
+         sctp_atky            0            0K            0
+         sctp_atcl            0            0K            0
+         sctp_a_it            0            0K            4
+         sctp_aadr            0            0K            0
+         sctp_stro            0            0K            0
+         sctp_stri            0            0K            0
+          sctp_map            0            0K            0
+           filemon            0            0K            0
+           pf_altq            0            0K            0
+           pf_osfp            0            0K            0
+     pf_krule_item            0            0K            0
+           pf_temp            0            0K            0
+        madt_table            0            0K            2
+          smartpqi            0            0K            0
+               ixl            0            0K            0
+        ice-resmgr            0            0K            0
+         ice-osdep            0            0K            0
+               ice            0            0K            0
+              iavf            0            0K            0
+             axgbe            0            0K            0
+       fpukern_ctx            0            0K            0
+          xen_intr            0            0K            0
+           xen_hvm            0            0K            0
+         legacydrv            0            0K            0
+      NMI handlers            0            0K            0
+            bounce            0            0K            0
+            busdma            0            0K            0
+            qpidrv            0            0K            0
+      dmar_idpgtbl            0            0K            0
+          dmar_dom            0            0K            0
+          dmar_ctx            0            0K            0
+      amdiommu_dom            0            0K            0
+      amdiommu_ctx            0            0K            0
+              isci            0            0K            0
+      iommu_dmamap            0            0K            0
+     hyperv_socket            0            0K            0
+           bxe_ilt            0            0K            0
+        aesni_data            0            0K            0
+            xenbus            0            0K            0
+     vm_fictitious            0            0K            0
+           UMAHash            0            0K            0
+         vm_pgdata            0            0K            0
+           jblocks            0            0K            0
+          savedino            0            0K           15
+          sentinel            0            0K            0
+            jfsync            0            0K            0
+            jtrunc            0            0K            0
+             sbdep            0            0K            5
+           jsegdep            0            0K            0
+              jseg            0            0K            0
+         jfreefrag            0            0K            0
+          jfreeblk            0            0K            0
+           jnewblk            0            0K            0
+            jmvref            0            0K            0
+           jremref            0            0K            0
+           jaddref            0            0K            0
+           freedep            0            0K            0
+         newdirblk            0            0K            8
+            dirrem            0            0K           28
+             mkdir            0            0K           16
+          freefile            0            0K           26
+          freeblks            0            0K           25
+          freefrag            0            0K           54
+        allocindir            0            0K            0
+       allocdirect            0            0K            0
+          ufs_trim            0            0K            0
+           mactemp            0            0K            0
+     audit_trigger            0            0K            0
+ audit_pipe_presel            0            0K            0
+     audit_pipeent            0            0K            0
+        audit_pipe            0            0K            0
+      audit_evname            0            0K            0
+         audit_bsm            0            0K            0
+      audit_gidset            0            0K            0
+        audit_text            0            0K            0
+        audit_path            0            0K            0
+        audit_data            0            0K            0
+        audit_cred            0            0K            0
+          ktls_ocf            0            0K            0
+        MLX5EEPROM            0            0K            0
+        MLX5EEPROM            0            0K            0
+        MLX5EEPROM            0            0K            0
+        MLX5EEPROM            0            0K            0
+        MLX5EEPROM            0            0K            0
+      MLX5E_TLS_RX            0            0K            0
+        MLX5EEPROM            0            0K            0
+         MLX5E_TLS            0            0K            0
+        MLX5EEPROM            0            0K            0
+        MLX5EEPROM            0            0K            0
+        MLX5EEPROM            0            0K            0
+            MLX5EN            0            0K            0
+        MLX5EEPROM            0            0K            0
+        MLX5EEPROM            0            0K            0
+        MLX5EEPROM            0            0K            0
+        MLX5EEPROM            0            0K            0
+        MLX5EEPROM            0            0K            0
+        MLX5EEPROM            0            0K            0
+        MLX5EEPROM            0            0K            0
+          MLX5DUMP            0            0K            0
+        MLX5EEPROM            0            0K            0
+        MLX5EEPROM            0            0K            0
+        MLX5EEPROM            0            0K            0
+        MLX5EEPROM            0            0K            0
+       simple_attr            0            0K            0
+          seq_file            0            0K            0
+           lkpiskb            0            0K            0
+             radix            0            0K            0
+               idr            0            0K            0
+          lkpindev            0            0K            0
+           lkpimhi            0            0K            0
+            lkpifw            0            0K            0
+         lkpi80211            0            0K            0
+               NLM            0            0K            0
+    ipsec-spdcache            0            0K            0
+         ipsec-reg            0            0K            0
+        ipsec-misc            0            0K            0
+      ipsecrequest            0            0K            0
+            ip6opt            0            0K            3
+       ip6_msource            0            0K            0
+      ip6_moptions            0            0K            0
+       in6_mfilter            0            0K            0
+             frag6            0            0K            0
+            tcplog            0            0K            0
+        tcp_hwpace            0            0K            0
+               LRO            0            0K            0
+        ip_msource            0            0K            0
+       ip_moptions            0            0K            0
+        in_mfilter            0            0K            0
+              ipid            0            0K            0
+         80211scan            0            0K            0
+      80211ratectl            0            0K            0
+        80211power            0            0K            0
+       80211nodeie            0            0K            0
+         80211node            0            0K            0
+      80211mesh_gt            0            0K            0
+      80211mesh_rt            0            0K            0
+         80211perr            0            0K            0
+         80211prep            0            0K            0
+         80211preq            0            0K            0
+          80211dfs            0            0K            0
+       80211crypto            0            0K            0
+          80211vap            0            0K            0
+             iflib            0            0K            0
+              vlan            0            0K            0
+               tun            0            0K            0
+               gif            0            0K            0
+           ifdescr            0            0K            0
+              zlib            0            0K           19
+           fadvise            0            0K            0
+           VN POLL            0            0K            0
+            statfs            0            0K          198
+     namei_tracker            0            0K            0
+       export_host            0            0K            0
+        cl_savebuf            0            0K           49
+               aio            0            0K            0
+               lio            0            0K            0
+               acl            0            0K            0
+          mbuf_tag            0            0K            0
+              ktls            0            0K            0
+              accf            0            0K            0
+               pts            0            0K            0
+           timerfd            0            0K            0
+               iov            0            0K        14749
+           eventfd            0            0K            0
+           Witness            0            0K            0
+             stack            0            0K            0
+              sbuf            0            0K          288
+          firmware            0            0K            0
+        compressor            0            0K            0
+              SWAP            0            0K            0
+         sysctltmp            0            0K          649
+            sysctl            0            0K            3
+              ekcd            0            0K            0
+            dumper            0            0K            0
+          sendfile            0            0K            0
+              rctl            0            0K            0
+             cache            0            0K            0
+          kcovinfo            0            0K            0
+      prison_racct            0            0K            0
+       Fail Points            0            0K            0
+             sigio            0            0K            1
+filedesc_to_leader            0            0K            0
+               pwd            0            0K            0
+       tty console            0            0K            0
+         boottrace            0            0K            0
+        isofs_node            0            0K            0
+       isofs_mount            0            0K            0
+     tr_raid5_data            0            0K            0
+    tr_raid1e_data            0            0K            0
+     tr_raid1_data            0            0K            0
+     tr_raid0_data            0            0K            0
+    tr_concat_data            0            0K            0
+       md_sii_data            0            0K            0
+   md_promise_data            0            0K            0
+    md_nvidia_data            0            0K            0
+   md_jmicron_data            0            0K            0
+     md_intel_data            0            0K            0
+       md_ddf_data            0            0K            0
+         raid_data            0            0K           72
+     geom_flashmap            0            0K            0
+         tmpfs dir            0            0K            0
+        tmpfs name            0            0K            0
+       tmpfs mount            0            0K            0
+     tmpfs extattr            0            0K            0
+           NFS FHA            0            0K            0
+         newnfsmnt            0            0K            0
+  newnfsclient_req            0            0K            0
+   NFSCL layrecall            0            0K            0
+     NFSCL session            0            0K            0
+     NFSCL sockreq            0            0K            0
+     NFSCL devinfo            0            0K            0
+     NFSCL flayout            0            0K            0
+      NFSCL layout            0            0K            0
+     NFSD rollback            0            0K            0
+      NFSCL diroff            0            0K            0
+        NEWNFSnode            0            0K            0
+         NFSCL lck            0            0K            0
+      NFSCL lckown            0            0K            0
+      NFSCL client            0            0K            0
+       NFSCL deleg            0            0K            0
+        NFSCL open            0            0K            0
+       NFSCL owner            0            0K            0
+            NFS fh            0            0K            0
+           NFS req            0            0K            0
+     NFSD usrgroup            0            0K            0
+       NFSD string            0            0K            0
+       NFSD V4lock            0            0K            0
+      NFSD V4state            0            0K            0
+       msdosfs_fat            0            0K            0
+     msdosfs_mount            0            0K            0
+      msdosfs_node            0            0K            0
+            DEVFS4            0            0K            0
+            DEVFS2            0            0K            0
+            gntdev            0            0K            0
+       privcmd_dev            0            0K            0
+        evtchn_dev            0            0K            0
+          xenstore            0            0K            0
+               xnb            0            0K            0
+          xen_acpi            0            0K            0
+              xbbd            0            0K            0
+               xbd            0            0K            0
+           Balloon            0            0K            0
+          sysmouse            0            0K            0
+            vtfont            0            0K            0
+            pvscsi            0            0K            0
+            USBdev            0            0K            0
+               USB            0            0K            0
+            twsbuf            0            0K            0
+       tcp_log_dev            0            0K            0
+      midi buffers            0            0K            0
+             mixer            0            0K            0
+              ac97            0            0K            0
+             hdacc            0            0K            0
+              hdac            0            0K            0
+              hdaa            0            0K            0
+       SIIS driver            0            0K            0
+               PUC            0            0K            0
+          ppbusdev            0            0K            0
+            sr_iov            0            0K            0
+               OCS            0            0K            0
+               OCS            0            0K            0
+              nvme            0            0K            0
+               nvd            0            0K            0
+            netmap            0            0K            0
+            mwldev            0            0K            0
+        MVS driver            0            0K            0
+          mrsasbuf            0            0K            0
+          mpt_user            0            0K            0
+          mps_user            0            0K            0
+            MPSSAS            0            0K            0
+               mps            0            0K            0
+          mpr_user            0            0K            0
+            MPRSAS            0            0K            0
+               mpr            0            0K            0
+            mfibuf            0            0K            0
+        md_sectors            0            0K            0
+           md_disk            0            0K            0
+           malodev            0            0K            0
+               LED            0            0K            0
+          ix_sriov            0            0K            0
+                ix            0            0K            0
+            ipsbuf            0            0K            0
+         ciss_data            0            0K            0
+         BACKLIGHT            0            0K            0
+           ath_hal            0            0K            0
+            athdev            0            0K            0
+           ata_pci            0            0K            0
+           ata_dma            0            0K            0
+       ata_generic            0            0K            0
+       AHCI driver            0            0K            0
+               agp            0            0K            0
+           acpipwr            0            0K            0
+         acpi_perf            0            0K            0
+         acpicmbat            0            0K            0
+        aacraidcam            0            0K            0
+       aacraid_buf            0            0K            0
+            aaccam            0            0K            0
+            aacbuf            0            0K            0
+              zstd            0            0K            0
+            XZ_DEC            0            0K            0
+            nvlist            0            0K            0
+          SCSI ENC            0            0K            0
+           SCSI sa            0            0K            0
+         scsi_pass            0            0K            0
+           scsi_da            0            0K           69
+            ata_da            0            0K            0
+           scsi_ch            0            0K            0
+           scsi_cd            0            0K            0
+           nvme_da            0            0K            0
+           CAM CCB            0            0K          523
+     CAM ccb queue            0            0K            0
+db> show uma
+              Zone   Size    Used    Free    Requests  Sleeps  Bucket  Total Mem    XFree
+   mbuf_jumbo_page   4096    8320    1078       25663       0     254   38494208        0
+              mbuf    256    8577    1085       33703       0     254    2473472        0
+          BUF TRIE    152     298   11506        1017       0      62    1794208        0
+        malloc-384    384    4142      28        4173       0      30    1601280        0
+       malloc-4096   4096     372       4        1491       0       2    1540096        0
+        malloc-128    128   11396     198       11469       0     126    1484032        0
+       UMA Slabs 0    112   10903      35       10903       0     126    1225056        0
+      mbuf_cluster   2048     508       0         508       0     254    1040384        0
+      malloc-65536  65536      13       2          70       0       1     983040        0
+         vmem btag     56   15584      79       15584       0     254     877128        0
+         FFS inode   1168     499      33         525       0       8     621376        0
+        RADIX NODE    152    3896     155       23301       0      62     615752        0
+            socket   1024      19     489        1316       0     254     520192        0
+          lkpicurr    168       2    3094           2       0      62     520128        0
+              pbuf   2624       0     198           0       0       2     519552        0
+        malloc-256    256    1928      67        2013       0      62     510720        0
+       malloc-2048   2048       8     144         515       0       8     311296        0
+             VNODE    440     530      73         558       0      30     265320        0
+        256 Bucket   2048     106      22        1000       0       8     262144        0
+         malloc-64     64    3828     267        3870       0     254     262080        0
+         VM OBJECT    264     876      84       12736       0      30     253440        0
+       malloc-2048   2048     106      14         107       0       8     245760        0
+         malloc-16     16   14331     169       14465       0     254     232000        0
+            DEVCTL   1024       0     220         123       0       0     225280        0
+            THREAD   1824     110      10         111       0       8     218880        0
+         malloc-32     32    5508     414        5604       0     254     189504        0
+         UMA Zones    768     237       2         237       0      16     183552        0
+        malloc-128    128    1159     236       25300       0     126     178560        0
+            lkpimm     56       1    3095           1       0     254     173376        0
+             unpcb    320       7     509        1158       0     254     165120        0
+       malloc-1024   1024     133      11        1026       0      16     147456        0
+       FFS2 dinode    256     499      71         525       0      62     145920        0
+      malloc-65536  65536       0       2         110       0       1     131072        0
+      malloc-65536  65536       2       0           2       0       1     131072        0
+      malloc-32768  32768       4       0           4       0       1     131072        0
+        malloc-128    128     899     124         964       0     126     130944        0
+       mbuf_packet    256       0     508         117       0     254     130048        0
+       S VFS Cache    104     986     184        1024       0     126     121680        0
+         MAP ENTRY     96     804     456       39441       0     126     120960        0
+          ksiginfo    112      33    1011          52       0     126     116928        0
+       malloc-4096   4096      25       3          41       0       2     114688        0
+     FPU_save_area    832     112      23         129       0      16     112320        0
+      malloc-32768  32768       3       0           3       0       1      98304        0
+              PROC   1376      37      29         776       0       8      90816        0
+          UMA Kegs    384     223       0         223       0      30      85632        0
+        128 Bucket   1024      44      39         237       0      16      84992        0
+      malloc-16384  16384       5       0           6       0       1      81920        0
+        malloc-256    256     235      80        1276       0      62      80640        0
+         64 Bucket    512      65      71        1201       0      30      69632        0
+         malloc-64     64     530     541       15999       0     254      68544        0
+        malloc-128    128     370     157         866       0     126      67456        0
+      malloc-65536  65536       1       0           1       0       1      65536        0
+      malloc-65536  65536       1       0           1       0       1      65536        0
+      malloc-32768  32768       0       2          11       0       1      65536        0
+      malloc-32768  32768       0       2         120       0       1      65536        0
+        malloc-256    256     159      96         248       0      62      65280        0
+             g_bio    408       0     150        5366       0      30      61200        0
+         filedesc0   1072      38      18         777       0       8      60032        0
+       malloc-8192   8192       7       0           8       0       1      57344        0
+         malloc-64     64     475     344         908       0     254      52416        0
+        malloc-256    256      72     123         468       0      62      49920        0
+         32 Bucket    256      58     137         530       0      62      49920        0
+           DIRHASH   1024      35      13          35       0      16      49152        0
+             NAMEI   1024       0      48       12144       0      16      49152        0
+       malloc-8192   8192       6       0           6       0       1      49152        0
+       malloc-8192   8192       6       0           6       0       1      49152        0
+       malloc-2048   2048       8      16          60       0       8      49152        0
+       malloc-2048   2048       0      24         573       0       8      49152        0
+       malloc-1024   1024      12      36         524       0      16      49152        0
+          syncache    168       0     264           5       0     254      44352        0
+              pipe    736       6      49         282       0      16      40480        0
+            pcpu-8      8    4340     268        4424       0     254      36864        0
+         udp_inpcb    408       6      84         128       0      30      36720        0
+         malloc-64     64     211     356       30932       0     254      36288        0
+         malloc-64     64     234     333         296       0     254      36288        0
+         malloc-64     64      90     477        1604       0     254      36288        0
+         malloc-64     64      11     556          11       0     254      36288        0
+        malloc-128    128      41     238         134       0     126      35712        0
+        malloc-128    128      67     212         862       0     126      35712        0
+        malloc-128    128      16     263        3427       0     126      35712        0
+        malloc-128    128      16     263          16       0     126      35712        0
+     routing nhops    256      10     125          17       0      62      34560        0
+           ttyoutq    256      72      63         160       0      62      34560        0
+        malloc-384    384       7      83          77       0      30      34560        0
+        malloc-384    384      68      22          68       0      30      34560        0
+        malloc-384    384      54      36         397       0      30      34560        0
+        malloc-256    256      23     112         171       0      62      34560        0
+        malloc-256    256      27     108         313       0      62      34560        0
+        malloc-256    256      19     116         390       0      62      34560        0
+        malloc-256    256       6     129          22       0      62      34560        0
+      malloc-16384  16384       0       2         180       0       1      32768        0
+       malloc-8192   8192       3       1           5       0       1      32768        0
+       malloc-4096   4096       6       2         560       0       2      32768        0
+       malloc-2048   2048       1      15          13       0       8      32768        0
+       malloc-2048   2048       3      13          12       0       8      32768        0
+       malloc-2048   2048       5      11         200       0       8      32768        0
+       malloc-1024   1024       2      30          45       0      16      32768        0
+       malloc-1024   1024       5      27           6       0      16      32768        0
+       malloc-1024   1024       6      26           6       0      16      32768        0
+       malloc-1024   1024       2      30         159       0      16      32768        0
+       malloc-1024   1024      10      22          10       0      16      32768        0
+        malloc-512    512       0      64         110       0      30      32768        0
+        malloc-512    512       6      58          24       0      30      32768        0
+        malloc-512    512       3      61          18       0      30      32768        0
+        malloc-512    512       6      58          69       0      30      32768        0
+        malloc-512    512       9      55           9       0      30      32768        0
+           pcpu-64     64     495      17         495       0     254      32768        0
+    ertt_txseginfo     40       0     808         620       0     254      32320        0
+            ttyinq    160     135      65         300       0      62      32000        0
+              PGRP    120      19     245          31       0     126      31680        0
+            clpbuf   2624       0      12          80       0       4      31488        0
+           VMSPACE    584      21      28         761       0      16      28616        0
+         16 Bucket    144      47     149         333       0      62      28224        0
+          4 Bucket     48       7     581          14       0     254      28224        0
+            da_ccb    544       0      49        1570       0      16      26656        0
+         TURNSTILE    136     121      68         121       0      62      25704        0
+            cpuset    200       7     121           7       0      62      25600        0
+       malloc-8192   8192       1       2         101       0       1      24576        0
+               PWD     40      10     596          99       0     254      24240        0
+           rtentry    168      13     131          17       0      62      24192        0
+             Files     80      70     230        6538       0     126      24000        0
+          8 Bucket     80      61     239         311       0     126      24000        0
+         tcp_inpcb   1304       4      14           9       0       8      23472        0
+        malloc-384    384      11      49          11       0      30      23040        0
+        malloc-384    384       9      51          12       0      30      23040        0
+        malloc-384    384      22      38         329       0      30      23040        0
+       Mountpoints   2816       2       6           2       0       4      22528        0
+        SLEEPQUEUE     88     121     135         121       0     126      22528        0
+         hostcache     64       1     314           1       0     254      20160        0
+              ertt     72       4     276           9       0     126      20160        0
+         malloc-64     64       1     314           1       0     254      20160        0
+         malloc-32     32      70     560         553       0     254      20160        0
+         malloc-32     32      98     532         170       0     254      20160        0
+         malloc-32     32      79     551         144       0     254      20160        0
+         malloc-32     32      64     566         926       0     254      20160        0
+         malloc-32     32      48     582        2868       0     254      20160        0
+         malloc-32     32      22     608        1071       0     254      20160        0
+          2 Bucket     32      50     580         305       0     254      20160        0
+             KNOTE    160       0     125           8       0      62      20000        0
+              vmem   1856       2       7           2       0       8      16704        0
+ epoch_record pcpu    256       4      60           4       0      62      16384        0
+      malloc-16384  16384       1       0           1       0       1      16384        0
+      malloc-16384  16384       1       0           1       0       1      16384        0
+      malloc-16384  16384       1       0           1       0       1      16384        0
+       malloc-4096   4096       0       4           4       0       2      16384        0
+       malloc-4096   4096       1       3           2       0       2      16384        0
+       malloc-4096   4096       1       3           5       0       2      16384        0
+       malloc-2048   2048       5       3           5       0       8      16384        0
+       malloc-1024   1024       1      15           1       0      16      16384        0
+        malloc-512    512       1      31           1       0      30      16384        0
+           SMR CPU     32       8     503           8       0     254      16352        0
+        sctp_laddr     48       0     336           4       0     254      16128        0
+              kenv    258      17      43        1063       0      30      15480        0
+            mqnode    416       3      33           3       0      30      14976        0
+        SMR SHARED     24       8     503           8       0     254      12264        0
+         malloc-32     32       7     371           7       0     254      12096        0
+         malloc-16     16     290     460         294       0     254      12000        0
+         malloc-16     16      48     702         133       0     254      12000        0
+         malloc-16     16      29     721         239       0     254      12000        0
+         malloc-16     16     202     548        4228       0     254      12000        0
+         malloc-16     16      16     734       24823       0     254      12000        0
+         malloc-16     16      14     736          16       0     254      12000        0
+        malloc-384    384       1      29           1       0      30      11520        0
+             ripcb    376       1      29           4       0      30      11280        0
+       malloc-8192   8192       0       1          26       0       1       8192        0
+       malloc-8192   8192       1       0           1       0       1       8192        0
+       malloc-8192   8192       1       0           1       0       1       8192        0
+       malloc-4096   4096       1       1           1       0       2       8192        0
+           pcpu-16     16       8     504           8       0     254       8192        0
+      vtnet_tx_hdr     24       0     334        6774       0     254       8016        0
+       UMA Slabs 1    176       8      14           8       0      62       3872        0
+        KMAP ENTRY     96      12      27          14       0       0       3744        0
+       FFS1 dinode    128       0       0           0       0     126          0        0
+           ada_ccb    272       0       0           0       0      30          0        0
+             swblk    136       0       0           0       0      62          0        0
+          swpctrie    152       0       0           0       0      62          0        0
+   cdg_qdiffsample     16       0       0           0       0     254          0        0
+   pf state scrubs     40       0       0           0       0     254          0        0
+   pf frag entries     40       0       0           0       0     254          0        0
+          pf frags    256       0       0           0       0      62          0        0
+  pf table entries    160       0       0           0       0     254          0        0
+pf table entry counters     64       0       0           0       0     254          0        0
+   pf UDP mappings    104       0       0           0       0     126          0        0
+   pf source nodes    152       0       0           0       0     254          0        0
+     pf state keys     88       0       0           0       0     126          0        0
+         pf states    384       0       0           0       0     254          0        0
+           pf tags    104       0       0           0       0     126          0        0
+          pf mtags    184       0       0           0       0      62          0        0
+       tcp_bbr_pcb    896       0       0           0       0      16          0        0
+       tcp_bbr_map    128       0       0           0       0     126          0        0
+      tcp_rack_pcb   1088       0       0           0       0       8          0        0
+      tcp_rack_map    128       0       0           0       0     126          0        0
+tfo_ccache_entries     80       0       0           0       0     126          0        0
+               tfo      4       0       0           0       0     254          0        0
+          sackhole     32       0       0           0       0     254          0        0
+               ipq     56       0       0           0       0     254          0        0
+   sctp_asconf_ack     48       0       0           0       0     254          0        0
+       sctp_asconf     40       0       0           0       0     254          0        0
+sctp_stream_msg_out    112       0       0           0       0     254          0        0
+        sctp_readq    152       0       0           0       0     254          0        0
+        sctp_chunk    152       0       0           0       0     254          0        0
+        sctp_raddr    736       0       0           0       0     254          0        0
+         sctp_asoc   2256       0       0           0       0     254          0        0
+           sctp_ep   1152       0       0           0       0     254          0        0
+   tcp_log_id_node    120       0       0           0       0     126          0        0
+ tcp_log_id_bucket    176       0       0           0       0      62          0        0
+           tcp_log    416       0       0           0       0     254          0        0
+          tcpreass     48       0       0           0       0     254          0        0
+     udplite_inpcb    408       0       0           0       0      30          0        0
+    IPsec SA lft_c     16       0       0           0       0     254          0        0
+            itimer    352       0       0           0       0      30          0        0
+            AIOLIO    272       0       0           0       0      30          0        0
+             AIOCB    552       0       0           0       0      16          0        0
+               AIO    208       0       0           0       0      62          0        0
+        mqnotifier    216       0       0           0       0      62          0        0
+            mvdata     64       0       0           0       0     254          0        0
+            mqueue    248       0       0           0       0      62          0        0
+        TMPFS node    240       0       0           0       0      62          0        0
+           NCLNODE    608       0       0           0       0      16          0        0
+     LTS VFS Cache    360       0       0           0       0      30          0        0
+       L VFS Cache    320       0       0           0       0      30          0        0
+     STS VFS Cache    144       0       0           0       0      62          0        0
+           cryptop    280       0       0           0       0      30          0        0
+  linux_dma_object     32       0       0           0       0     254          0        0
+  linux_dma_pctrie    152       0       0           0       0      62          0        0
+   IOMMU_MAP_ENTRY    112       0       0           0       0     126          0        0
+    mbuf_jumbo_16k  16384       0       0           0       0     254          0        0
+     mbuf_jumbo_9k   9216       0       0           0       0     254          0        0
+      audit_record   1280       0       0           0       0       8          0        0
+         domainset     40       0       0           0       0     254          0        0
+        MAC labels     40       0       0           0       0     254          0        0
+            vnpbuf   2624       0       0           0       0      16          0        0
+           nfspbuf   2624       0       0           0       0       4          0        0
+            swwbuf   2624       0       0           0       0       2          0        0
+            swrbuf   2624       0       0           0       0       4          0        0
+          umtx_shm     88       0       0           0       0     126          0        0
+           umtx pi     96       0       0           0       0     126          0        0
+rangeset pctrie nodes    152       0       0           0       0      62          0        0
+          rl_entry     48       0       0           0       0     254          0        0
+      malloc-65536  65536       0       0           0       0       1          0        0
+      malloc-65536  65536       0       0           0       0       1          0        0
+      malloc-65536  65536       0       0           0       0       1          0        0
+      malloc-32768  32768       0       0           0       0       1          0        0
+      malloc-32768  32768       0       0           0       0       1          0        0
+      malloc-32768  32768       0       0           0       0       1          0        0
+      malloc-32768  32768       0       0           0       0       1          0        0
+      malloc-16384  16384       0       0           0       0       1          0        0
+      malloc-16384  16384       0       0           0       0       1          0        0
+      malloc-16384  16384       0       0           0       0       1          0        0
+       malloc-4096   4096       0       0           0       0       2          0        0
+        malloc-512    512       0       0           0       0      30          0        0
+        malloc-512    512       0       0           0       0      30          0        0
+         malloc-16     16       0       0           0       0     254          0        0
+           pcpu-32     32       0       0           0       0     254          0        0
+            pcpu-4      4       0       0           0       0     254          0        0
+            fakepg    104       0       0           0       0     126          0        0
+          UMA Hash    256       0       0           0       0      62          0        0
