@@ -41,15 +41,15 @@ discoverability across kernel versions and OS architectures.
 ### Fuchsia
 - [Setup guide for fuzzing Fuchsia](https://github.com/jeanineohene-agyei/syzkaller/blob/master/docs/fuchsia/Fuchsia%20Fuzzing%20Setup%20Notes.md)
 - Files updated:
-  - /vm/qemu/qemu.go
+  - `/vm/qemu/qemu.go`
     - Updated network driver option
-  - /executor/executor_runner.h
+  - `/executor/executor_runner.h`
     - Placed Fuchsia-specific guards around unsupported POSIX-specific headers, structs, and signals
-  - /executor/files.h
+  - `/executor/files.h`
     - Placed fall-back stub for `remove_dir()` function
-  - /executor/subprocess.h
+  - `/executor/subprocess.h`
     - Added Fuchsia-specific Subprocess class to use `fdio_spawn` as opposed to POSIX-style `posix_spawnp` call to spawn new processes.
-  - /sys/fuchsia
+  - `/sys/fuchsia`
     - Added syzlang descriptions for `counter.fidl`, `iob.fidl`, `restricted.fidl`, and `sampler.fidl`
 ---
 
